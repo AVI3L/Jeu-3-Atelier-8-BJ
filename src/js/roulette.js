@@ -10,7 +10,13 @@ const possibilité = [
 const boutonLevier = document.getElementById("boutonLevier");
 const messageStatut = document.getElementById("messageStatut");
 const AfficheResultat = document.getElementById("AfficheResultat");
+let solde = 100;
+const coutMise = 10;
 
+
+function obtenirMultiplicateur(symboleCherche) {
+    const element = possibilité.find(item => item.symbole === symboleCherche);
+        return element ? element.multiplicateur : 0;}
 
 function tirerSymbole() {
             const totalPoids = 64; // Total des poids du tableau
@@ -25,6 +31,16 @@ function tirerSymbole() {
             }
         }
         function jouerRoulette(e) {
+
+             if (solde < coutMise) {
+                messageStatut.textContent = "Vous n'avez pas assez de pièces pour jouer !";
+                boutonRecharge.style.display = "inline"; 
+                return;
+            }
+            solde -= coutMise;
+            soldePieces.textContent = solde;
+            boutonRecharge.style.display = "none";
+
             e.disabled = true;
             messageStatut.textContent = "La roulette tourne...";
             AfficheResultat.textContent = "";
@@ -37,12 +53,32 @@ function tirerSymbole() {
                 
                 
                 AfficheResultat.textContent = resultatGagnant;
+
                 if (symbole1 === symbole2 && symbole2 === symbole3) {
-                    messageStatut.textContent = "La roulette s'est arrêtée ! Gagné !";
-                } else {
+                    const multiplicateur = obtenirMultiplicateur(symbole1);
+                    const gain = coutMise * multiplicateur;
+                    solde += gain;
+                    messageStatut.textContent = "La roulette s'est arrêtée ! Grande victoire (3 identiques) !";
+                }
+                else if (symbole1 === symbole2 || symbole2 === symbole3 || symbole1 === symbole3) {
+                    const gain = coutMise; // Regagne sa mise
+                    solde += gain;
+                    messageStatut.textContent = "La roulette s'est arrêtée ! Petite victoire (2 identiques) !";
+                }
+                else if (symbole1 === "🔔" || symbole2 === "🔔" || symbole3 === "🔔") {
+                    const multiplicateurCloche = obtenirMultiplicateur("🔔"); 
+                    const gain = Math.floor((coutMise * multiplicateurCloche) / 3); 
+                    solde += gain;
+                    messageStatut.textContent = "La roulette s'est arrêtée ! Victoire Cloche (Au moins une cloche 🔔) !";
+                }
+                else {
                     messageStatut.textContent = "La roulette s'est arrêtée ! Perdu !";
                 }
-
+                soldePieces.textContent = solde;
+                if (solde < coutMise) {
+                    boutonRecharge.style.display = "inline";
+                }
+                
                 e.disabled = false;
 
             }, 2000);
