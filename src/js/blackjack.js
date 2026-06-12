@@ -1,167 +1,112 @@
-const SUITS = ['♠', '♥', '♦', '♣'];
-const RANKS = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+const SUITS = ['♠','♥','♦','♣'];
+const RANKS = ['A','2','3','4','5','6','7','8','9','10','J','Q','K'];
 
-let deck = [];
-let playerHand = [];
-let dealerHand = [];
-let gameOver = false;
+let deck=[], player=[], dealer=[], over=false;
 
+const $  = id => document.getElementById(id);
+const el = (id, txt, cls) => { $(id).textContent=txt; if(cls!==undefined) $(id).className=cls; };
 
-function createDeck() {
-  const d = [];
-  for (const suit of SUITS)
-    for (const rank of RANKS)
-      d.push({ rank, suit });
+function shuffle(d) {
+  for(let i=d.length-1;i>0;i--){const j=Math.random()*i|0;[d[i],d[j]]=[d[j],d[i]];}
   return d;
 }
 
-function shuffleDeck(d) {
-  for (let i = d.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [d[i], d[j]] = [d[j], d[i]];
-  }
-  return d;
-}
-
-function drawCard() {
-  if (deck.length === 0) deck = shuffleDeck(createDeck());
+function deal() {
+  if(!deck.length) deck=shuffle(SUITS.flatMap(s=>RANKS.map(r=>({r,s}))));
   return deck.pop();
 }
 
-
-function cardValue(card) {
-  if (['J', 'Q', 'K'].includes(card.rank)) return 10;
-  if (card.rank === 'A') return 11;
-  return parseInt(card.rank);
+function score(hand) {
+  let s=0,a=0;
+  for(const c of hand){s+=['J','Q','K'].includes(c.r)?10:c.r==='A'?11:+c.r;if(c.r==='A')a++;}
+  while(s>21&&a--) s-=10;
+  return s;
 }
 
-function calculateScore(hand) {
-  let score = 0, aces = 0;
-  for (const card of hand) {
-    score += cardValue(card);
-    if (card.rank === 'A') aces++;
-  }
-  while (score > 21 && aces > 0) { score -= 10; aces--; }
-  return score;
+function isBJ(h) {
+  return h.length===2&&h.some(c=>c.r==='A')&&h.some(c=>['10','J','Q','K'].includes(c.r));
 }
 
-function isBlackjack(hand) {
-  if (hand.length !== 2) return false;
-  const ranks = hand.map(c => c.rank);
-  return ranks.includes('A') && ranks.some(r => ['10', 'J', 'Q', 'K'].includes(r));
+function cardHTML(c, hidden, delay) {
+  if(hidden) return `<div class="card hidden" style="animation-delay:${delay}ms"></div>`;
+  const red = '♥♦'.includes(c.s);
+  return `<div class="card ${red?'red':'black'}" style="animation-delay:${delay}ms">
+    <div class="card-corner"><b>${c.r}</b><span>${c.s}</span></div>
+    <div class="card-center">${c.s}</div>
+    <div class="card-corner card-corner-bot"><b>${c.r}</b><span>${c.s}</span></div>
+  </div>`;
 }
 
-
-function cardLabel(card) {
-  return card.rank + card.suit;
+function render(hand, id, hideSecond=false) {
+  $(id).innerHTML = hand.map((c,i)=>cardHTML(c,hideSecond&&i===1,i*80)).join('');
 }
 
-function renderHand(hand, containerId, hideSecond = false) {
-  const container = document.getElementById(containerId);
-  container.innerHTML = hand.map((card, i) =>
-    (hideSecond && i === 1) ? '[?]' : cardLabel(card)
-  ).join('  ');
+function refresh(hideDealer=false) {
+  el('player-score','Score : '+score(player));
+  el('dealer-score','Score : '+(hideDealer ? (['J','Q','K'].includes(dealer[0].r)?10:dealer[0].r==='A'?11:+dealer[0].r) : score(dealer)));
 }
 
-function updateScores(hideDealer = false) {
-  document.getElementById('player-score').textContent =
-    'Score : ' + calculateScore(playerHand);
-  document.getElementById('dealer-score').textContent = hideDealer
-    ? 'Score : ' + cardValue(dealerHand[0])
-    : 'Score : ' + calculateScore(dealerHand);
+function buttons(hit, stand) {
+  $('btn-hit').disabled=!hit;
+  $('btn-stand').disabled=!stand;
+  $('btn-new-game').style.display=over?'inline-block':'none';
 }
 
-function setMessage(msg) {
-  document.getElementById('message').textContent = msg;
+function msg(txt, cls='') { el('message',txt,cls); }
+
+function revealDealer() {
+  render(dealer,'dealer-cards');
+  refresh();
 }
 
-function setButtons(hitEnabled, standEnabled) {
-  document.getElementById('btn-hit').disabled = !hitEnabled;
-  document.getElementById('btn-stand').disabled = !standEnabled;
-  document.getElementById('btn-new-game').style.display = gameOver ? 'inline' : 'none';
+function finish() {
+  over=true;
+  const p=score(player), d=score(dealer);
+  buttons(false,false);
+  if(d>21)     msg(`Banque dépasse 21 — Vous gagnez ! (${p} vs ${d})`,'win');
+  else if(p>d) msg(`Vous gagnez ! (${p} vs ${d})`,'win');
+  else if(d>p) msg(`Banque gagne. (${p} vs ${d})`,'lose');
+  else         msg(`Égalité — Push ! (${p} vs ${d})`,'push');
 }
-
 
 function startGame() {
-  deck = shuffleDeck(createDeck());
-  playerHand = [drawCard(), drawCard()];
-  dealerHand = [drawCard(), drawCard()];
-  gameOver = false;
-
-  renderHand(dealerHand, 'dealer-cards', true);
-  renderHand(playerHand, 'player-cards', false);
-  updateScores(true);
-  setButtons(true, true);
-
-  if (isBlackjack(playerHand)) {
-    revealDealer();
-    gameOver = true;
-    setMessage(isBlackjack(dealerHand)
-      ? 'Égalité — Double Blackjack !'
-      : 'BLACKJACK ! Vous gagnez !'
-    );
-    setButtons(false, false);
-    return;
+  deck=shuffle(SUITS.flatMap(s=>RANKS.map(r=>({r,s}))));
+  player=[deal(),deal()];
+  dealer=[deal(),deal()];
+  over=false;
+  render(dealer,'dealer-cards',true);
+  render(player,'player-cards');
+  refresh(true);
+  buttons(true,true);
+  if(isBJ(player)) {
+    revealDealer(); over=true;
+    msg(isBJ(dealer)?'Égalité — Double Blackjack !':'BLACKJACK ! Vous gagnez !', isBJ(dealer)?'push':'win');
+    buttons(false,false);
+  } else {
+    msg('Tirez ou Restez ?');
   }
-
-  setMessage('Tirez ou Restez ?');
 }
 
 function hit() {
-  if (gameOver) return;
-  playerHand.push(drawCard());
-  renderHand(playerHand, 'player-cards', false);
-  updateScores(true);
-  const score = calculateScore(playerHand);
-  if (score > 21) {
-    gameOver = true;
-    revealDealer();
-    setMessage('Vous avez dépassé 21 — Vous perdez !');
-    setButtons(false, false);
-  } else if (score === 21) {
-    stand();
-  }
+  if(over) return;
+  player.push(deal());
+  render(player,'player-cards');
+  refresh(true);
+  const s=score(player);
+  if(s>21){ over=true; revealDealer(); msg('Dépassé 21 — Vous perdez !','lose'); buttons(false,false); }
+  else if(s===21) stand();
 }
 
 function stand() {
-  if (gameOver) return;
+  if(over) return;
   revealDealer();
-  dealerPlay();
+  const iv=setInterval(()=>{
+    if(score(dealer)<17){ dealer.push(deal()); render(dealer,'dealer-cards'); refresh(); }
+    else { clearInterval(iv); finish(); }
+  },700);
 }
 
-function revealDealer() {
-  renderHand(dealerHand, 'dealer-cards', false);
-  updateScores(false);
-}
-
-function dealerPlay() {
-  const interval = setInterval(() => {
-    if (calculateScore(dealerHand) < 17) {
-      dealerHand.push(drawCard());
-      renderHand(dealerHand, 'dealer-cards', false);
-      updateScores(false);
-    } else {
-      clearInterval(interval);
-      determineWinner();
-    }
-  }, 600);
-}
-
-function determineWinner() {
-  gameOver = true;
-  const p = calculateScore(playerHand);
-  const d = calculateScore(dealerHand);
-  setButtons(false, false);
-  if (d > 21)        setMessage(`La banque dépasse 21 — Vous gagnez ! (${p} vs ${d})`);
-  else if (p > d)    setMessage(`Vous gagnez ! (${p} vs ${d})`);
-  else if (d > p)    setMessage(`La banque gagne. (${p} vs ${d})`);
-  else               setMessage(`Égalité — Push ! (${p} vs ${d})`);
-}
-
-
-document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('btn-hit').addEventListener('click', hit);
-  document.getElementById('btn-stand').addEventListener('click', stand);
-  document.getElementById('btn-new-game').addEventListener('click', startGame);
-  startGame();
-});
+$('btn-hit').onclick=hit;
+$('btn-stand').onclick=stand;
+$('btn-new-game').onclick=startGame;
+startGame();
