@@ -1,18 +1,24 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jeu de la roulette</title>
 </head>
+
 <body>
     <p>Clique sur le bouton pour lancer la roulette.</p>
     <p id="messageStatut"></p>
     <button id="boutonLevier">Lancer</button>
     <h2 id="AfficheResultat"></h2>
+    <p>
+        Mise : <input type="number" id="inputMise" value="10" min="1" style="width: 60px;"> pièces
+    </p>
     <p>Pièces : <strong id="soldePieces">100</strong> 🪙 (Mise : 10 pièces)</p>
     <button id="boutonRecharge">Recharger (100 pièces)</button>
 
-<script src="../src/js/roulette.js"></script>
+    <script src="../src/js/roulette.js"></script>
 </body>
+
 </html>
