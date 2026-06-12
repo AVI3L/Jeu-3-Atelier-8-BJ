@@ -1,21 +1,24 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Memory Cards</title>
-    <link rel="stylesheet" href="../src/css/style.css">
+    <link rel="stylesheet" href="../src/css/memo.css">
 </head>
-<body>
 
-    <header>
+<body class="memo-page">
+
+    <header class="memo-header">
         <div class="title">
+            <p class="eyebrow">Jeu mémoire</p>
             <h1>Memory Cards</h1>
         </div>
 
         <div class="controls">
             <div class="select">
-                <select id="difficulty">
+                <select id="difficulty" aria-label="Choisir la difficulté">
                     <option value="easy">Facile (8)</option>
                     <option value="medium">Moyen (16)</option>
                     <option value="hard">Difficile (24)</option>
@@ -23,30 +26,30 @@
             </div>
 
             <div class="button">
-                <button id="restartBtn">
+                <button id="restartBtn" type="button">
                     Nouvelle partie
                 </button>
             </div>
         </div>
     </header>
 
-    <main>
-
+    <main class="memo-main">
         <div id="game" class="game"></div>
-
     </main>
 
     <script src="../src/js/cards.js"></script>
     <script src="../src/js/game.js"></script>
     <script src="../src/js/ui.js"></script>
     <script>
-        
         const restartBtn = document.getElementById("restartBtn");
+        const difficultySelect = document.getElementById("difficulty");
 
-        restartBtn.addEventListener("click", btn => {
-            startGame(difficulty.value);
-        })
+        restartBtn.addEventListener("click", () => {
+            startGame(difficultySelect.value);
+        });
 
+        startGame(difficultySelect.value);
     </script>
 </body>
+
 </html>
