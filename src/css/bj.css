@@ -1,0 +1,113 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: sans-serif;
+  background: #f5f5f0;
+  color: #1a1a1a;
+  padding: 60px 40px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 56px;
+}
+
+.table {
+  display: flex;
+  gap: 80px;
+  margin-bottom: 56px;
+}
+
+.zone {
+  flex: 1;
+}
+
+h2 {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: #999;
+  margin-bottom: 16px;
+}
+
+#dealer-score,
+#player-score {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 12px;
+}
+
+#dealer-cards,
+#player-cards {
+  font-size: 1.6rem;
+  min-height: 2.5rem;
+}
+
+.actions {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+button {
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 12px 28px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 160px;
+}
+
+#btn-hit {
+  background: #1a1a1a;
+  color: #fff;
+}
+
+#btn-hit:hover:not(:disabled) {
+  background: #333;
+}
+
+#btn-stand {
+  background: transparent;
+  color: #1a1a1a;
+  border: 1px solid #bbb;
+}
+
+#btn-stand:hover:not(:disabled) {
+  border-color: #1a1a1a;
+}
+
+#btn-new-game {
+  background: transparent;
+  color: #999;
+  border: 1px solid #ddd;
+  margin-top: 8px;
+}
+
+#btn-new-game:hover {
+  color: #1a1a1a;
+  border-color: #999;
+}
+
+button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+#message {
+  font-size: 1.1rem;
+  font-weight: 600;
+  min-height: 1.5rem;
+  padding-top: 16px;
+  border-top: 1px solid #ddd;
+}

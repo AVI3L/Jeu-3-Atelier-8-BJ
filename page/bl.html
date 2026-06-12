@@ -1,13 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./src/css/style.css">
-    <title>BlackJack</title>
+  <meta charset="UTF-8" />
+  <title>Blackjack</title>
+
 </head>
 <body>
-    <h1>Bienvenue a votre table de BlackJack</h1>
-    <script src="./src/js/script.js"></script>
+
+  <h1>Blackjack</h1>
+
+  <h2>Banque</h2>
+  <p id="dealer-score">Score : —</p>
+  <div id="dealer-cards"></div>
+
+  <hr>
+
+  <h2>Vous</h2>
+  <p id="player-score">Score : —</p>
+  <div id="player-cards"></div>
+
+  <hr>
+
+  <p id="message">Bonne chance !</p>
+
+  <button id="btn-hit">Tirer</button>
+  <button id="btn-stand">Rester</button>
+  <button id="btn-new-game" style="display:none">Nouvelle partie</button>
+
+  <script src="../src/js/blackjack.js"></script>
+    <link rel="stylesheet" href="../src/css/bj.css" />
+
 </body>
 </html>
