@@ -41,16 +41,16 @@
 
     <script src="../src/js/cards.js"></script>
     <script src="../src/js/game.js"></script>
-    <script src="../src/js/ui.js"></script>
     <script>
         const restartBtn = document.getElementById("restartBtn");
         const difficultySelect = document.getElementById("difficulty");
 
+        let game = new Game();
+
         restartBtn.addEventListener("click", () => {
-            startGame(difficultySelect.value);
+            game = new Game();
         });
 
-        startGame(difficultySelect.value);
     </script>
 </body>
 

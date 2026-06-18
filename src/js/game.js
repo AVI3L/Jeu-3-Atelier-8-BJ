@@ -6,7 +6,9 @@ const difficulties = { // ill see for a custome one
 
 class Game {
 
-    Constructor(cardCount = 8) {
+    Constructor(difficulty = "easy") {
+        const cardCount = difficulties[difficulty];
+
         this.won = false;
 
         this.firstCard = null;
@@ -28,6 +30,10 @@ class Game {
         });
 
         this.cards = this.shuffle(this.cards);
+
+        this.resetTurn();
+        
+        this.updateUI();
     }
 
     checkMatch() {
@@ -91,17 +97,5 @@ class Game {
 
             game.appendChild(div);
         });
-    }
-
-    start(difficulty) {
-        while (!this.won){
-            const cardCount = difficulties[difficulty];
-            
-            this.cards = this.createGame(cardCount);
-            
-            this.resetTurn();
-            
-            this.updateUI();
-        }
     }
 }

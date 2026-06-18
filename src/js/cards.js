@@ -25,9 +25,9 @@ class Card {
 }
 
 class Deck {
-    constructor() {
-        this.cards = [];
-        this.createDeck();
+    constructor(cards=false) {
+        this.cards = cards ?? [];
+        cards ? null : this.createDeck();
     }
 
     createDeck() {
