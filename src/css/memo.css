@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+
 body.memo-page{
     background: conic-gradient(#FD7272 90deg, #F8EFBA 90deg 180deg,#FD7272 90deg 270deg, #F8EFBA 270deg);
     background-repeat: repeat;
@@ -9,6 +11,10 @@ body.memo-page{
     display: flex;
     justify-content: space-between;
     align-items: center;
+    font-family: "Oswald", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: normal;
+    font-style: normal;
 }
 
 .card {
@@ -28,7 +34,6 @@ body.memo-page{
 }
 
 .card-back{
-    opacity: 0.8;
     background: repeating-linear-gradient(45deg, #F8EFBA 0px, #F8EFBA 2px, transparent 2px, transparent 20px), repeating-linear-gradient(135deg, #F8EFBA 0px, #F8EFBA 2px, transparent 2px, transparent 20px), #eb2f06;
     border: solid #000 2px;
     border-radius: 10px;
@@ -39,7 +44,6 @@ body.memo-page{
 }
 
 .card-front{
-    opacity: 0.8;
     background: #FFF;
     border: solid #000 2px;
     border-radius: 10px;
