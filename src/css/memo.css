@@ -5,6 +5,12 @@ body.memo-page{
     background-position: top left;
 }
 
+.memo-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .card {
     width: 60px;
     height: 90px;
@@ -57,4 +63,12 @@ body.memo-page{
     -moz-transform: rotateY(180deg);
     -ms-transform: rotateY(180deg);
     -o-transform: rotateY(180deg);
+}
+
+.text-red{
+    color: #eb2f06;
+}
+
+.text-black{
+    color: #000;
 }

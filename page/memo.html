@@ -13,9 +13,11 @@
     <audio src="../src/audio/You Win !.mp3" class="WinSong"></audio>
 
     <header class="memo-header">
-        <div class="title">
-            <p class="eyebrow">Jeu mémoire</p>
-            <h1>Memory Cards</h1>
+        <div class="left">
+
+            <div class="title">
+                <p class="eyebrow">Jeu mémoire</p>
+                <h1>Memory Cards</h1>
         </div>
 
         <div class="controls">
@@ -26,13 +28,22 @@
                     <option value="hard">Difficile (24)</option>
                 </select>
             </div>
-
+            
             <div class="button">
                 <button id="restartBtn" type="button">
                     Nouvelle partie
                 </button>
             </div>
         </div>
+    </div>
+    <div class="right">
+        <div class="score">
+                <p>Coups : <span id="score">0</span></p>
+            </div>
+            <div class="timer">
+                <p>Temps : <span id="timer">0</span> secondes</p>
+            </div>
+    </div>
     </header>
 
     <main class="memo-main">
