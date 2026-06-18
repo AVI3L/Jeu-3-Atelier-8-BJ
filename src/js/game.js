@@ -7,24 +7,33 @@ const difficulties = { // ill see for a custome one
 class Game {
 
     constructor(difficulty = "easy") {
+        /** @type {number} */
         const cardCount = difficulties[difficulty];
 
+        /** @type {boolean} */
         this.won = false;
 
+        /** @type {Card|null} */
         this.firstCard = null;
+        /** @type {Card|null} */
         this.secondCard = null;
 
+        /** @type {boolean} */
         this.lockBoard = false;
         
+        /** @type {Deck} */
         this.deck = new Deck();
         this.deck.shuffle();
 
         const pairCount = cardCount / 2;
 
+        /** @type {Card[]} */
         const selectedCards = this.deck.cards.slice(0, pairCount);
 
+        /** @type {Card[]} */
         this.cards = [...selectedCards, ...selectedCards];
 
+        /** @type {Card[]} */
         const newCards = [];
         
         this.cards.forEach((card, index) => newCards.push(new Card(card.getValue(), card.getSuit()).setId(index)));
@@ -45,7 +54,7 @@ class Game {
     checkMatch() {
         this.lockBoard = true;
   
-        const isMatch = this.firstCard.symbol === this.secondCard.symbol;
+        const isMatch = this.firstCard.getSymbol() === this.secondCard.getSymbol();
     
         if (isMatch) {
         this.firstCard.matched = true;

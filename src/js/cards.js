@@ -39,6 +39,7 @@ class Card {
 
 class Deck {
     constructor() {
+        /** @type {Card[]} */
         this.cards = [];
         this.createDeck();
     }
