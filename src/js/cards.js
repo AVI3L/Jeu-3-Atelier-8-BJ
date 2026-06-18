@@ -1,31 +1,55 @@
 const suits = ["♠", "♥", "♦", "♣"];
 const values = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
 
-let firstCard = null;
-let secondCard = null;
+let lastid = 0;
 
-let lockBoard = false;
+class Card {
+    constructor(value, suit) {
+        this.value = value;
+        this.suit = suit;
+        this.flipped = false;
+        this.matched = false;
+    }
 
-function createDeck() { // maybe ill do an class for the deck and cards later for now its make it
-    const deck = [];
+    flip() {
+        this.flipped = !this.flipped;
+    }
 
-    for (const suit of suits) {
-        for (const value of values) {
-            deck.push({
-                symbol: `${value}${suit}`
-            });
+    setId(id) {
+        this.id = id;
+    }
+
+    getId(){
+        return this.id;
+    }
+}
+
+class Deck {
+    constructor() {
+        this.cards = [];
+        this.createDeck();
+    }
+
+    createDeck() {
+        for (const suit of suits) {
+            for (const value of values) {
+                this.cards.push(new Card(value, suit));
+            }
         }
     }
 
-    return deck;
-}
-
-function shuffle(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
+    shuffle() {
+        for (let i = this.cards.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [this.cards[i], this.cards[j]] = [this.cards[j], this.cards[i]];
+        }
     }
-    return array;
+
+    findFlipped() {
+        return this.cards.filter(card => card.flipped);
+    }
+
+    
 }
 
 function flipCard(cardId) {
@@ -35,7 +59,7 @@ function flipCard(cardId) {
   
     if (card.flipped || card.matched) return;
   
-    card.flipped = true;
+    card.flip();
   
     updateUI();
   
