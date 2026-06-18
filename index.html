@@ -1,11 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Accueil</title>
+    <link rel="stylesheet" href="./src/css/style.css">
 </head>
-<body>
-    
+
+<body class="home-page">
+    <main class="home-shell">
+        <section class="home-hero">
+            <p class="eyebrow">Atelier 8</p>
+            <h1>Jeu 3</h1>
+            <p class="home-intro">Choisis un jeu et lance-toi. L'accueil reste simple, clair et rapide à naviguer.</p>
+        </section>
+
+        <section class="home-grid" aria-label="Jeux disponibles">
+            <a class="home-card roulette" href="./page/roulette.html">
+                <span class="home-card-index">01</span>
+                <span class="home-card-title">Roulette</span>
+                <span class="home-card-text">Un jeu rapide et direct.</span>
+            </a>
+            <a class="home-card memo" href="./page/memo.html">
+                <span class="home-card-index">02</span>
+                <span class="home-card-title">Memory</span>
+                <span class="home-card-text">La version la plus visuelle.</span>
+            </a>
+            <a class="home-card blackjack" href="./page/bl.html">
+                <span class="home-card-index">03</span>
+                <span class="home-card-title">BlackJack</span>
+                <span class="home-card-text">Une table à ouvrir ensuite.</span>
+            </a>
+        </section>
+
+        <footer class="footer home-footer">
+            <a href="https://github.com/AVI3L/Jeu-3-Atelier-8-BJ" target="_blank" rel="noreferrer noopener">Github</a>
+            <a href="./page/rs.html">RulesSet</a>
+            <a href="https://app.notion.com/p/2ffc4faf775f806394b8eb6284071871" target="_blank"
+                rel="noreferrer noopener">Notion</a>
+        </footer>
+    </main>
 </body>
+
 </html>
