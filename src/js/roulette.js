@@ -1,7 +1,3 @@
-// ══════════════════════════════════════════
-//  DONNÉES DU JEU
-// ══════════════════════════════════════════
-
 const possibilité = [
     { symbole: "7️⃣", poids: 3,  multiplicateur: 100 },
     { symbole: "💎", poids: 5,  multiplicateur: 50  },
@@ -15,10 +11,6 @@ const possibilité = [
 
 // Liste de tous les symboles (utilisée pendant l'animation)
 const tousLesSymboles = possibilité.map(p => p.symbole);
-
-// ══════════════════════════════════════════
-//  ÉLÉMENTS DU DOM
-// ══════════════════════════════════════════
 
 const boutonLevier   = document.getElementById("boutonLevier");
 const messageStatut  = document.getElementById("messageStatut");
@@ -154,23 +146,17 @@ function jouerRoulette() {
     // Récupère les fenêtres des rouleaux
     const fenetres = document.querySelectorAll(".rouleau-fenetre");
 
-    // Démarre le son de rotation (ticker) — stopTourne() l'arrêtera
-    const stopTourne = sonTourne();
 
     // Les 3 rouleaux partent EN MÊME TEMPS mais s'arrêtent à des moments différents
     tournerRouleau(sym1, fenetres[0], symbole1, 1400, () => {
-        sonArret();
         messageStatut.textContent = "⏳ Encore deux...";
     });
     tournerRouleau(sym2, fenetres[1], symbole2, 2200, () => {
-        sonArret();
         messageStatut.textContent = "⏳ Dernier rouleau...";
     });
     tournerRouleau(sym3, fenetres[2], symbole3, 3100, () => {
-        stopTourne(); // arrête le son de rotation
-        sonArret();
 
-                // ── Calcul du résultat (logique originale inchangée) ──
+                // ── Calcul du résultat ──
                 if (symbole1 === symbole2 && symbole2 === symbole3) {
                     const multiplicateur = obtenirMultiplicateur(symbole1);
                     const gain = coutMise * multiplicateur;
@@ -179,7 +165,6 @@ function jouerRoulette() {
                     AfficheResultat.textContent = `+${gain} 🪙`;
                     AfficheResultat.style.color = "#ffd700";
                     fenetres.forEach(f => f.classList.add("gagnant"));
-                    sonJackpot(); // fanfare + pluie de pièces
                 }
                 else if (symbole1 === symbole2 || symbole2 === symbole3 || symbole1 === symbole3) {
                     const gain = coutMise;
@@ -187,7 +172,6 @@ function jouerRoulette() {
                     messageStatut.textContent = `✨ 2 identiques ! Mise récupérée : ${gain} pièces.`;
                     AfficheResultat.textContent = `+${gain} 🪙`;
                     AfficheResultat.style.color = "#ffd700";
-                    sonGain(); // bips de pièces
                 }
                 else if (symbole1 === "🔔" || symbole2 === "🔔" || symbole3 === "🔔") {
                     const multiplicateurCloche = obtenirMultiplicateur("🔔");
@@ -196,13 +180,11 @@ function jouerRoulette() {
                     messageStatut.textContent = `🔔 Cloche ! Petit gain : ${gain} pièces.`;
                     AfficheResultat.textContent = `+${gain} 🪙`;
                     AfficheResultat.style.color = "#ffd700";
-                    sonGain();
                 }
                 else {
                     messageStatut.textContent = "❌ Perdu ! Retentez votre chance.";
                     AfficheResultat.textContent = `-${coutMise} 🪙`;
                     AfficheResultat.style.color = "#ff4444";
-                    sonPerdu(); // son descendant
                 }
 
                 soldePieces.textContent = solde;
@@ -225,14 +207,12 @@ function jouerRoulette() {
 // Quand on clique sur la manivelle : animation + lancement du jeu
 levierPoignee.addEventListener("click", () => {
     if (boutonLevier.disabled) return;
-    sonLevier(); // son mécanique du levier
     levierPoignee.classList.add("tire");
     setTimeout(() => levierPoignee.classList.remove("tire"), 600);
     jouerRoulette();
 });
 
 boutonLevier.addEventListener("click", () => {
-    sonLevier();
     levierPoignee.classList.add("tire");
     setTimeout(() => levierPoignee.classList.remove("tire"), 600);
     jouerRoulette();
