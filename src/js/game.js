@@ -74,7 +74,7 @@ class Game {
     
             this.updateUI();
     
-        }, 1000);
+        }, 1500);
         }
     }
 
@@ -133,7 +133,7 @@ class Game {
             setTimeout(() => { div.className = card.flipped || card.matched ? "card card-back half-flip" : "card card-back flip";}, 1);
 
             setTimeout(() => { div.className = card.flipped || card.matched ? "card card-front final-flip" : "card card-back flip"; 
-            div.innerHTML = card.flipped || card.matched ? `<div class="card-content final-flip">${card.getSymbol()}</div>` : `<div class="card-content"></div>`;
+            div.innerHTML = card.flipped || card.matched ? `<div class="card-content final-flip ${card.getSuit() === '♥' || card.getSuit() === '♦' ? 'text-red' : 'text-black'}">${card.getSymbol()}</div>` : `<div class="card-content"></div>`;
 
             }, 500);
 
