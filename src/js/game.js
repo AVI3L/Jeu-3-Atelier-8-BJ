@@ -6,7 +6,7 @@ const difficulties = { // ill see for a custome one
 
 class Game {
 
-    Constructor(difficulty = "easy") {
+    constructor(difficulty = "easy") {
         const cardCount = difficulties[difficulty];
 
         this.won = false;
@@ -25,11 +25,17 @@ class Game {
 
         this.cards = [...selectedCards, ...selectedCards];
 
-        this.cards.forEach((card, index) => {
-            card.setId(index);
-        });
+        const newCards = [];
+        
+        this.cards.forEach((card, index) => newCards.push(new Card(card.getValue(), card.getSuit()).setId(index)));
 
-        this.cards = this.shuffle(this.cards);
+        console.log(newCards);
+
+        this.deck = new Deck().parse(newCards);
+
+        this.deck.shuffle();
+
+        this.cards = this.deck.cards;
 
         this.resetTurn();
         
@@ -72,30 +78,57 @@ class Game {
     checkWin() {
         this.won = this.cards.every(card => card.matched);
     
-        if (won) {
+        if (this.won) {
         alert("Bravo !");
         }
     }
 
+    flipCard(cardId) {
+        if (this.lockBoard) return;
+    
+        const card = this.cards.find(c => c.getId() === cardId);
+    
+        if (card.flipped || card.matched) return;
+    
+        card.flip();
+    
+        this.updateUI();
+    
+        if (!this.firstCard) {
+        this.firstCard = card;
+        return;
+        }
+    
+        this.secondCard = card;
+    
+        this.checkMatch();
+    }
+
     updateUI() {
-        const game = document.getElementById("game");
+        const frame = document.getElementById("game");
 
-        game.innerHTML = "";
+        frame.innerHTML = "";
 
-        cards.forEach(card => {
+        this.cards.forEach(card => {
+            console.log(card);
             const div = document.createElement("div");
 
-            div.className = card.flipped || card.matched ? "card card-back half-flip" : "card card-back";
+            div.dataset.cardId = card.getId();
 
-            div.innerHTML = card.flipped || card.matched ? `<div class="card-content">${card.symbol}</div>` : `<div class="card-content"></div>`;
+            div.className = card.flipped || card.matched ? "card card-back" : "card card-back";
 
             div.addEventListener("click", () => {
-                flipCard(card.id);
+                this.flipCard(card.getId());
             });
 
-            setTimeout(() => { div.className = card.flipped || card.matched ? "card card-front final-flip" : "card card-back flip"; }, 500);
+            setTimeout(() => { div.className = card.flipped || card.matched ? "card card-back half-flip" : "card card-back flip";}, 1);
 
-            game.appendChild(div);
+            setTimeout(() => { div.className = card.flipped || card.matched ? "card card-front final-flip" : "card card-back flip"; 
+            div.innerHTML = card.flipped || card.matched ? `<div class="card-content final-flip">${card.getSymbol()}</div>` : `<div class="card-content"></div>`;
+
+            }, 500);
+
+            frame.appendChild(div);
         });
     }
 }

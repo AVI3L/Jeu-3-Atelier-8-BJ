@@ -17,17 +17,30 @@ class Card {
 
     setId(id) {
         this.id = id;
+        return this;
     }
 
     getId(){
         return this.id;
     }
+
+    getSymbol() {
+        return `${this.value}${this.suit}`;
+    }
+
+    getSuit() {
+        return this.suit;
+    }
+    
+    getValue() {
+        return this.value;
+    }
 }
 
 class Deck {
-    constructor(cards=false) {
-        this.cards = cards ?? [];
-        cards ? null : this.createDeck();
+    constructor() {
+        this.cards = [];
+        this.createDeck();
     }
 
     createDeck() {
@@ -49,26 +62,16 @@ class Deck {
         return this.cards.filter(card => card.flipped);
     }
 
-    
-}
-
-function flipCard(cardId) {
-    if (lockBoard) return;
-  
-    const card = cards.find(c => c.id === cardId);
-  
-    if (card.flipped || card.matched) return;
-  
-    card.flip();
-  
-    updateUI();
-  
-    if (!firstCard) {
-      firstCard = card;
-      return;
+    parse(Cards){
+        this.cards = Cards.map(card => {
+            const newCard = new Card(card.value, card.suit);
+            newCard.flipped = card.flipped;
+            newCard.matched = card.matched;
+            newCard.setId(card.id);
+            return newCard;
+        });
+        return this;
     }
-  
-    secondCard = card;
-  
-    checkMatch();
+
+    
 }
