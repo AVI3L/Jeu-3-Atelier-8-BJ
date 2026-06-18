@@ -1,0 +1,501 @@
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Oswald:wght@400;700&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ══════════════════════════════════════════
+   FOND ROUGE CASINO (tapis avec symboles)
+══════════════════════════════════════════ */
+body {
+    min-height: 100vh;
+    font-family: 'Oswald', sans-serif;
+    display: flex;
+    justify-content: center;
+    padding: 30px 12px 50px;
+
+    /* Couleur de base rouge foncé */
+    background-color: #6b0000;
+
+    /* Dégradé radial (plus clair au centre comme dans l'image) + motif SVG des symboles cartes */
+    background-image:
+        radial-gradient(ellipse at center, rgba(160,10,10,0.6) 0%, rgba(30,0,0,0.85) 100%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cpath d='M25 5 L45 25 L25 45 L5 25Z' fill='none' stroke='rgba(90%2C0%2C0%2C0.55)' stroke-width='1'/%3E%3Ctext x='25' y='30' text-anchor='middle' font-size='13' fill='rgba(80%2C0%2C0%2C0.6)' font-family='serif'%3E%E2%99%A0%3C/text%3E%3Cpath d='M75 5 L95 25 L75 45 L55 25Z' fill='none' stroke='rgba(90%2C0%2C0%2C0.55)' stroke-width='1'/%3E%3Ctext x='75' y='30' text-anchor='middle' font-size='13' fill='rgba(80%2C0%2C0%2C0.6)' font-family='serif'%3E%E2%99%A5%3C/text%3E%3Cpath d='M25 55 L45 75 L25 95 L5 75Z' fill='none' stroke='rgba(90%2C0%2C0%2C0.55)' stroke-width='1'/%3E%3Ctext x='25' y='80' text-anchor='middle' font-size='13' fill='rgba(80%2C0%2C0%2C0.6)' font-family='serif'%3E%E2%99%A6%3C/text%3E%3Cpath d='M75 55 L95 75 L75 95 L55 75Z' fill='none' stroke='rgba(90%2C0%2C0%2C0.55)' stroke-width='1'/%3E%3Ctext x='75' y='80' text-anchor='middle' font-size='13' fill='rgba(80%2C0%2C0%2C0.6)' font-family='serif'%3E%E2%99%A3%3C/text%3E%3C/svg%3E");
+    background-size: auto, 100px 100px;
+}
+
+/* ══════════════════════════════════════════
+   CONTENEUR PRINCIPAL
+══════════════════════════════════════════ */
+.page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    width: 100%;
+    max-width: 500px;
+}
+
+/* ══════════════════════════════════════════
+   TITRE
+══════════════════════════════════════════ */
+.titre {
+    font-family: 'Bangers', cursive;
+    font-size: 2.8rem;
+    letter-spacing: 4px;
+    color: #ffd700;
+    text-align: center;
+    text-shadow:
+        0 0 10px #ff6600,
+        0 0 30px #ff3300,
+        3px 3px 0 #5a2000,
+        -1px -1px 0 #5a2000;
+}
+
+/* ══════════════════════════════════════════
+   ZONE SOLDE DE DÉPART
+══════════════════════════════════════════ */
+.zone-solde-depart {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0,0,0,0.5);
+    border: 2px solid #ffd700;
+    border-radius: 10px;
+    padding: 8px 16px;
+    color: #ffe066;
+    font-size: 0.95rem;
+    letter-spacing: 1px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.zone-solde-depart input {
+    background: #1a0000;
+    border: 2px solid #ffd700;
+    border-radius: 6px;
+    color: #ffd700;
+    font-family: 'Oswald', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    width: 80px;
+    text-align: center;
+    outline: none;
+}
+
+#btnAppliquer {
+    background: #ffd700;
+    color: #3a0000;
+    border: none;
+    border-radius: 6px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 5px 12px;
+    cursor: pointer;
+    letter-spacing: 1px;
+    transition: background 0.15s;
+}
+#btnAppliquer:hover { background: #ffec60; }
+
+/* ══════════════════════════════════════════
+   MACHINE À SOUS (corps + manivelle côte à côte)
+══════════════════════════════════════════ */
+.machine {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    width: 100%;
+}
+
+/* Corps de la machine */
+.machine-corps {
+    flex: 1;
+    background: linear-gradient(170deg, #2a2a2a 0%, #1a1a1a 50%, #2a2a2a 100%);
+    border: 4px solid #ffd700;
+    border-radius: 20px 0 0 20px;
+    padding: 20px 22px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    box-shadow:
+        inset 0 0 30px rgba(0,0,0,0.7),
+        0 0 0 2px #b8860b,
+        0 8px 30px rgba(0,0,0,0.6);
+    position: relative;
+}
+
+/* Petites étoiles décoratives dans les coins */
+.machine-corps::before { content: '★'; position: absolute; top: 8px; left: 12px;  color: #ffd700; font-size: 1rem; opacity: 0.7; }
+.machine-corps::after  { content: '★'; position: absolute; top: 8px; right: 12px; color: #ffd700; font-size: 1rem; opacity: 0.7; }
+
+/* ══════════════════════════════════════════
+   LES 3 ROULEAUX
+══════════════════════════════════════════ */
+.rouleaux {
+    display: flex;
+    gap: 10px;
+    background: #0d0d0d;
+    border: 3px solid #b8860b;
+    border-radius: 10px;
+    padding: 10px;
+    width: 100%;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.9);
+}
+
+/* Fenêtre d'un rouleau */
+.rouleau-fenetre {
+    flex: 1;
+    height: 100px;
+    background: linear-gradient(180deg, #111 0%, #1e1e1e 50%, #111 100%);
+    border: 2px solid #444;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.8);
+}
+
+/* Reflets haut et bas pour l'effet profondeur */
+.rouleau-fenetre::before,
+.rouleau-fenetre::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    height: 30%;
+    pointer-events: none;
+    z-index: 1;
+}
+.rouleau-fenetre::before {
+    top: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.7) 0%, transparent 100%);
+}
+.rouleau-fenetre::after {
+    bottom: 0;
+    background: linear-gradient(0deg, rgba(0,0,0,0.7) 0%, transparent 100%);
+}
+
+/* Le symbole affiché */
+.rouleau-fenetre span {
+    font-size: 3rem;
+    line-height: 1;
+    user-select: none;
+    position: relative;
+    z-index: 0;
+    transition: none;
+}
+
+/* Symbole en train de tourner (flou) */
+.rouleau-fenetre span.tourne {
+    animation: tournoiement 0.08s steps(1) infinite;
+    filter: blur(1.5px);
+}
+@keyframes tournoiement {
+    0%   { transform: translateY(0); }
+    50%  { transform: translateY(-6px); }
+    100% { transform: translateY(0); }
+}
+
+/* Rouleau gagnant (surbrillance dorée) */
+.rouleau-fenetre.gagnant {
+    border-color: #ffd700;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.5), 0 0 20px rgba(255,200,0,0.8);
+    animation: clignote 0.5s alternate infinite;
+}
+@keyframes clignote {
+    from { box-shadow: inset 0 0 10px rgba(0,0,0,0.5), 0 0 15px rgba(255,200,0,0.7); }
+    to   { box-shadow: inset 0 0 10px rgba(0,0,0,0.5), 0 0 40px rgba(255,200,0,1); }
+}
+
+/* ══════════════════════════════════════════
+   MESSAGES
+══════════════════════════════════════════ */
+#messageStatut {
+    color: #ffe066;
+    font-size: 0.95rem;
+    text-align: center;
+    letter-spacing: 1px;
+    min-height: 1.3em;
+    text-shadow: 0 0 6px rgba(255,150,0,0.5);
+}
+
+#AfficheResultat {
+    font-family: 'Bangers', cursive;
+    font-size: 1.6rem;
+    text-align: center;
+    min-height: 1.3em;
+    letter-spacing: 2px;
+}
+
+/* ══════════════════════════════════════════
+   CONTRÔLES (mise, solde)
+══════════════════════════════════════════ */
+.controles {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+    background: rgba(0,0,0,0.35);
+    border: 1px solid #444;
+    border-radius: 8px;
+    padding: 10px 14px;
+}
+
+.controles label {
+    color: #c8a060;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.controles input {
+    background: #1a0000;
+    border: 2px solid #ffd700;
+    border-radius: 6px;
+    color: #ffd700;
+    font-family: 'Oswald', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    width: 70px;
+    text-align: center;
+    outline: none;
+}
+.controles input:focus { border-color: #ff8800; }
+
+.controles p {
+    color: #c8a060;
+    font-size: 0.95rem;
+}
+.controles strong { color: #ffd700; font-size: 1.1rem; }
+
+#aperçuGains {
+    color: #7a5a30;
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+/* ══════════════════════════════════════════
+   BOUTON LANCER
+══════════════════════════════════════════ */
+#boutonLevier {
+    font-family: 'Bangers', cursive;
+    font-size: 1.5rem;
+    letter-spacing: 3px;
+    padding: 11px 36px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    background: linear-gradient(160deg, #ff5500 0%, #cc1500 50%, #ff3300 100%);
+    color: #fff5d0;
+    text-shadow: 2px 2px 3px #3a0000;
+    box-shadow: 0 0 0 3px #ffd700, 0 5px 0 #7a0e00, 0 8px 15px rgba(0,0,0,0.5);
+    transition: transform 0.1s, box-shadow 0.1s;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+}
+#boutonLevier::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 60%);
+    pointer-events: none;
+}
+#boutonLevier:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 0 0 3px #ffd700, 0 7px 0 #7a0e00, 0 12px 20px rgba(0,0,0,0.5);
+}
+#boutonLevier:active:not(:disabled) {
+    transform: translateY(4px);
+    box-shadow: 0 0 0 3px #ffd700, 0 1px 0 #7a0e00, 0 3px 8px rgba(0,0,0,0.4);
+}
+#boutonLevier:disabled {
+    background: linear-gradient(160deg, #3a2000 0%, #1a0a00 100%);
+    color: #6a4a20;
+    cursor: not-allowed;
+    box-shadow: 0 0 0 2px #4a3000, 0 3px 0 #0a0000;
+}
+
+/* ══════════════════════════════════════════
+   ZONE DE RECHARGE
+══════════════════════════════════════════ */
+#zoneRecharge {
+    width: 100%;
+    background: rgba(0,0,0,0.4);
+    border: 2px solid #7a3aff;
+    border-radius: 10px;
+    padding: 12px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    animation: apparition 0.3s ease;
+}
+@keyframes apparition {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+#zoneRecharge p {
+    color: #ffd700;
+    font-family: 'Bangers', cursive;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+}
+.recharge-inputs {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+#inputMontantRecharge {
+    background: #1a0000;
+    border: 2px solid #ffd700;
+    border-radius: 6px;
+    color: #ffd700;
+    font-family: 'Oswald', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    width: 90px;
+    text-align: center;
+    outline: none;
+}
+#inputMontantRecharge:focus { border-color: #ff8800; }
+.recharge-inputs span { color: #ffe066; }
+
+#boutonRecharge {
+    font-family: 'Bangers', cursive;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    padding: 8px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background: linear-gradient(160deg, #7700cc, #4400aa);
+    color: #e8c0ff;
+    box-shadow: 0 0 0 2px #c060ff, 0 4px 0 #220050;
+    transition: transform 0.1s;
+}
+#boutonRecharge:hover  { transform: translateY(-2px); }
+#boutonRecharge:active { transform: translateY(2px); }
+
+/* ══════════════════════════════════════════
+   MANIVELLE (côté droit de la machine)
+══════════════════════════════════════════ */
+.levier-zone {
+    width: 52px;
+    background: linear-gradient(170deg, #222 0%, #111 50%, #222 100%);
+    border: 4px solid #ffd700;
+    border-left: none;
+    border-radius: 0 16px 16px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 18px 0 18px;
+    position: relative;
+    box-shadow: 0 0 0 2px #b8860b, 0 8px 30px rgba(0,0,0,0.6);
+    cursor: pointer;
+    min-height: 220px;
+}
+
+/* Rail vertical de la manivelle */
+.levier-rail {
+    position: absolute;
+    top: 40px;
+    bottom: 30px;
+    width: 10px;
+    background: linear-gradient(90deg, #555, #ccc, #555);
+    border-radius: 5px;
+    box-shadow: inset 0 0 4px rgba(0,0,0,0.5);
+}
+
+/* La poignée qui coulisse */
+.levier-poignee {
+    position: absolute;
+    top: 20px; /* position haute = repos */
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 2;
+    cursor: pointer;
+    transition: top 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Animation : tiré vers le bas */
+.levier-poignee.tire {
+    top: calc(100% - 80px);
+}
+
+/* La boule rouge en haut de la manivelle */
+.levier-boule {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #ff6666, #cc0000, #880000);
+    box-shadow: 0 0 8px rgba(0,0,0,0.6), 0 2px 4px rgba(0,0,0,0.4);
+    border: 2px solid #ff4444;
+}
+
+/* La tige sous la boule */
+.levier-tige {
+    width: 8px;
+    height: 60px;
+    background: linear-gradient(90deg, #777, #ddd, #777);
+    border-radius: 4px;
+    box-shadow: inset 0 0 3px rgba(0,0,0,0.4);
+}
+
+/* ══════════════════════════════════════════
+   TABLE DES GAINS
+══════════════════════════════════════════ */
+.table-gains {
+    background: rgba(0,0,0,0.55);
+    border: 2px solid #5a3a00;
+    border-radius: 12px;
+    padding: 12px 18px;
+    width: 100%;
+    box-shadow: 0 0 15px rgba(0,0,0,0.4);
+}
+.table-titre {
+    font-family: 'Bangers', cursive;
+    color: #ffd700;
+    font-size: 1rem;
+    letter-spacing: 3px;
+    text-align: center;
+    margin-bottom: 8px;
+    text-shadow: 0 0 6px #ff6600;
+}
+.gains-grille {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 3px 16px;
+    color: #c8a060;
+    font-size: 0.85rem;
+}
+.gains-grille span:nth-child(even) {
+    color: #ffd700;
+    font-weight: 700;
+    text-align: right;
+}
+
+/* ══════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════ */
+@media (max-width: 420px) {
+    .titre { font-size: 2rem; }
+    .rouleau-fenetre { height: 82px; }
+    .rouleau-fenetre span { font-size: 2.4rem; }
+    #boutonLevier { font-size: 1.2rem; }
+    .levier-zone { width: 42px; }
+    .levier-boule { width: 22px; height: 22px; }
+}

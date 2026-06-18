@@ -1,24 +1,103 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jeu de la roulette</title>
+    <title>Roulette Casino</title>
+    <link rel="stylesheet" href="../src/css/roulette.css">
 </head>
-
 <body>
-    <p>Clique sur le bouton pour lancer la roulette.</p>
-    <p id="messageStatut"></p>
-    <button id="boutonLevier">Lancer</button>
-    <h2 id="AfficheResultat"></h2>
-    <p>
-        Mise : <input type="number" id="inputMise" value="10" min="1" style="width: 60px;"> pièces
-    </p>
-    <p>Pièces : <strong id="soldePieces">100</strong> 🪙 (Mise : 10 pièces)</p>
-    <button id="boutonRecharge">Recharger (100 pièces)</button>
 
+    <div class="page">
+
+        <h1 class="titre">🎰 CASINO ROYALE 🎰</h1>
+
+        <!-- Solde de départ : modifiable à tout moment -->
+        <div class="zone-solde-depart">
+            <span>Solde de départ :</span>
+            <input type="number" id="inputSoldeDepart" value="100" min="10">
+            <span>🪙</span>
+            <button id="btnAppliquer">Appliquer</button>
+        </div>
+
+        <!-- Machine à sous -->
+        <div class="machine">
+
+            <!-- Corps principal -->
+            <div class="machine-corps">
+
+                <!-- Les 3 fenêtres de rouleaux -->
+                <div class="rouleaux">
+                    <div class="rouleau-fenetre">
+                        <span id="sym1">🎰</span>
+                    </div>
+                    <div class="rouleau-fenetre">
+                        <span id="sym2">🎰</span>
+                    </div>
+                    <div class="rouleau-fenetre">
+                        <span id="sym3">🎰</span>
+                    </div>
+                </div>
+
+                <!-- Message et résultat -->
+                <p id="messageStatut">Tirez la manivelle pour jouer !</p>
+                <h2 id="AfficheResultat"></h2>
+
+                <!-- Mise et solde -->
+                <div class="controles">
+                    <label>
+                        🪙 Mise :
+                        <input type="number" id="inputMise" value="10" min="1">
+                        pièces
+                    </label>
+                    <p>Solde : <strong id="soldePieces">100</strong> 🪙</p>
+                    <p id="aperçuGains"></p>
+                </div>
+
+                <!-- Bouton lancer (alternative à la manivelle) -->
+                <button id="boutonLevier">🎲 LANCER</button>
+
+                <!-- Zone de recharge (cachée par défaut) -->
+                <div id="zoneRecharge" style="display:none">
+                    <p>💸 Recharger votre solde :</p>
+                    <div class="recharge-inputs">
+                        <input type="number" id="inputMontantRecharge" value="100" min="10">
+                        <span>🪙</span>
+                        <button id="boutonRecharge">🔄 Recharger</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Manivelle sur le côté droit -->
+            <div class="levier-zone">
+                <div id="levierPoignee" class="levier-poignee" title="Tirer pour jouer">
+                    <div class="levier-boule"></div>
+                    <div class="levier-tige"></div>
+                </div>
+                <div class="levier-rail"></div>
+            </div>
+
+        </div>
+
+        <!-- Table des gains -->
+        <div class="table-gains">
+            <p class="table-titre">— TABLE DES GAINS —</p>
+            <div class="gains-grille">
+                <span>7️⃣ 7️⃣ 7️⃣</span><span>×100</span>
+                <span>💎 💎 💎</span><span>×50</span>
+                <span>💰 💰 💰</span><span>×25</span>
+                <span>🍀 🍀 🍀</span><span>×10</span>
+                <span>🔔 🔔 🔔</span><span>×5</span>
+                <span>🍒 🍒 🍒</span><span>×4</span>
+                <span>2 identiques</span><span>×1</span>
+                <span>🔔 seule</span><span>×1.6</span>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="../src/js/sons.js"></script>
     <script src="../src/js/roulette.js"></script>
 </body>
-
 </html>
