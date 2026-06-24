@@ -76,3 +76,137 @@ body.memo-page{
 .text-black{
     color: #000;
 }
+
+/** pocker table
+
+@charset "UTF-8";
+/* Modified Meyer Reset based on http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126   License: none (public domain)*/
+html, body, div, span, applet, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, tt, var,b, u, i, center,dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,time, mark, audio, video {
+    margin: 0;padding: 0;border: 0;font: inherit; vertical-align: baseline;
+}
+article, aside, details, figcaption, figure,footer, header, hgroup, menu, nav, section {display: block;}
+body {line-height: 1;}
+blockquote, q {quotes: none;}
+blockquote:before, blockquote:after,q:before, q:after {content: '';}
+table {border-collapse: collapse;border-spacing: 0;}
+*, *:before, *:after {box-sizing: border-box;}
+/* End Modified Meyer Reset*/
+
+:root {
+    --textcolor:white;
+    --accentcolor:#269;
+    --lightaccentcolor:#9df;
+    --reversecolor:black;
+}
+html {
+    font-size:16px;
+    font-family:Trebuchet,sans-serif;
+}
+body {
+    background:var(--accentcolor);
+    color:var(--reversecolor);
+    margin:0;padding:0;
+    line-height:1.5;
+}
+strong, b {font-weight:bold;}
+#wrapper {
+    position:relative;
+    margin:0 auto;padding:1.2rem;
+    width:100%;height:auto;min-height:725px;
+    min-width:320px;max-width:1000px;
+    background:var(--reversecolor);
+    color:var(--textcolor);
+    text-align:left;
+    background-image:url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/358203/MedallionRugMedium.jpg");
+  background-size:100% 100%;
+}
+#cardtable {
+  width:98%;
+  height:620px;
+  background:radial-gradient(rgba(53,168,109,0.95) 0%, rgba(20,76,44,0.9) 64%,#784428 65%,#B78B5D 66%,#B7895A 67%,#835231 70%,#92623D 96%,#784428 99%,#B78B5D 100%);
+  border:3px solid #642;
+  margin:0 auto;
+  border-radius:50%;
+  padding:14% 10% 0 10%;
+  text-align:center;
+}
+h1, h2, h3, h4 {
+    color:var(--textcolor);
+    text-align:center;
+}
+h1 {font-size:2rem;margin:0 0 1rem 0;}
+h2 {font-size:1.5rem;margin:0 0 0 0;}
+p {font-size:1.2rem;margin:0;}
+a:link, a:visited {color:var(--accentcolor);}
+a:hover {text-decoration:none;}
+
+#numFld {font-size:1.2rem;width:4rem;text-align:right;padding:0;margin:0 0 0 4px;}
+#txtFld {width:100%;height:4.2rem;font-size:1.8rem;font-family:inherit;}
+button {
+    -webkit-appearance:none;
+    font-size:1.4rem;
+    font-weight:normal;
+    background:var(--lightaccentcolor);
+    border-radius:12px;
+    border:2px solid var(--accentcolor);
+    color:var(--reversecolor);
+    padding:0.3rem 0.5rem 0.3rem 0.5rem;
+    cursor:pointer;
+    margin:10px 20px 10px 20px;
+}
+#togglecards {position:absolute;left:10px;top:10px;}
+button:hover {
+    color:var(--textcolor);
+    background:var(--accentcolor);
+}
+ol, ul {margin:1rem 1rem 1rem 2rem;}
+select {
+    background:var(--lightaccentcolor);
+    color:var(--textcolor);
+    width:auto;
+    font-size:inherit;
+    font-weight:normal;
+    text-align:center;
+    height:auto;
+    border-radius:8px;
+    margin:10px 0;
+}
+.uiunit {
+  display:inline-block;
+  margin:0.1rem;
+  text-align:left;
+}
+.cards {font-size:1.8rem;}
+.cards-black {color:black;}
+.cards-red {color:red;}
+
+/*For custom cards*/
+.card {
+  display:inline-block;
+  background:white;
+  width:2.86rem;height:4rem;
+  border:2px solid black;
+  border-radius:4px;
+  margin:2px 2px 0 0;
+  padding:0;
+  position:relative;
+}
+.card-back {background:radial-gradient(#0e6699,#006);}
+
+.card-rank, .card-suit {
+  line-height:1.6rem;
+  font-size:inherit;
+}
+.card-rank {position:absolute;left:3px;top:1px;font-family:"Bookman",serif;}
+.card-suit {position:absolute;right:2px;bottom:0;}
+.unicodecard {font-size:3rem;
+  background-image:linear-gradient(to right, transparent 0%, transparent 11%, white 12%,white 88%,transparent 89%, transparent 100%);
+}
+
+*/
