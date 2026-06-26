@@ -3,101 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Roulette Casino</title>
+    <title>Casino Royale - Machine à sous Immersive</title>
     <link rel="stylesheet" href="../src/css/roulette.css">
+
+
+
 </head>
 <body>
 
-    <div class="page">
+    <div class="game-wrapper">
 
-        <h1 class="titre">🎰 CASINO ROYALE 🎰</h1>
-
-        <!-- Solde de départ : modifiable à tout moment -->
-        <div class="zone-solde-depart">
-            <span>Solde de départ :</span>
-            <input type="number" id="inputSoldeDepart" value="100" min="10">
-            <span>🪙</span>
-            <button id="btnAppliquer">Appliquer</button>
+        <div class="top-bar">
+            <div class="setup-solde">
+                <span>Solde de départ :</span>
+                <input type="number" id="inputSoldeDepart" value="500" min="10">
+                <button id="btnAppliquer" class="btn-premium">Fixer</button>
+            </div>
         </div>
 
-        <!-- Machine à sous -->
-        <div class="machine">
+        <div class="main-content">
 
-            <!-- Corps principal -->
-            <div class="machine-corps">
+            <div class="slot-machine-viewport">
+                <!-- Image de fond située dans votre dossier img -->
+                <img id="slotBg" class="slot-machine-image" 
+                     src="../src/img/slot_machine.png" 
+                     alt="Machine"
+                     onerror="this.onerror=null; this.src='http://googleusercontent.com/image_generation_content/263';">
 
-                <!-- Les 3 fenêtres de rouleaux -->
-                <div class="rouleaux">
-                    <div class="rouleau-fenetre">
-                        <span id="sym1">🎰</span>
+                <!-- Couche cliquable et interactive positionnée par-dessus votre image -->
+                <div class="interactive-overlay">
+
+                    <!-- Écran de statut texte supérieur -->
+                    <div class="led-status-screen">
+                        <p id="messageStatut">PRÊT À JOUER</p>
+                        <h2 id="AfficheResultat"></h2>
                     </div>
-                    <div class="rouleau-fenetre">
-                        <span id="sym2">🎰</span>
-                    </div>
-                    <div class="rouleau-fenetre">
-                        <span id="sym3">🎰</span>
-                    </div>
-                </div>
 
-                <!-- Message et résultat -->
-                <p id="messageStatut">Tirez la manivelle pour jouer !</p>
-                <h2 id="AfficheResultat"></h2>
+                    <!-- Les 3 cases transparentes alignées avec l'image où s'affichent vos émojis -->
+                    <div class="reels-container">
+                        <div id="fenetre1" class="reel-window">
+                            <span id="rouleau1">7️⃣</span>
+                        </div>
+                        <div id="fenetre2" class="reel-window">
+                            <span id="rouleau2">🍒</span>
+                        </div>
+                        <div id="fenetre3" class="reel-window">
+                            <span id="rouleau3">🍀</span>
+                        </div>
+                    </div>
 
-                <!-- Mise et solde -->
-                <div class="controles">
-                    <label>
-                        🪙 Mise :
+                    <!-- Afficheurs digitaux du solde et de la mise active -->
+                    <div class="hud-balance">
+                        <span id="soldePieces">500</span>
+                    </div>
+
+                    <div class="hud-mise">
                         <input type="number" id="inputMise" value="10" min="1">
-                        pièces
-                    </label>
-                    <p>Solde : <strong id="soldePieces">100</strong> 🪙</p>
-                    <p id="aperçuGains"></p>
-                </div>
-
-                <!-- Bouton lancer (alternative à la manivelle) -->
-                <button id="boutonLevier">🎲 LANCER</button>
-
-                <!-- Zone de recharge (cachée par défaut) -->
-                <div id="zoneRecharge" style="display:none">
-                    <p>💸 Recharger votre solde :</p>
-                    <div class="recharge-inputs">
-                        <input type="number" id="inputMontantRecharge" value="100" min="10">
-                        <span>🪙</span>
-                        <button id="boutonRecharge">🔄 Recharger</button>
                     </div>
+
+                    <!-- Zone d'action invisible calée sur le bouton physique "SPIN" de l'image -->
+                    <button id="boutonLevier" class="physical-spin-button" title="Lancer !"></button>
+
+                    <!-- Zone d'action sur la manivelle mécanique à droite -->
+                    <div id="levierPoignee" class="lever-hotspot" title="Actionner le levier !"></div>
+
+                    <!-- Boutons interactifs du bas de la console de l'image ("BET" et "HOTE!") -->
+                    <div id="btnBetPlus" class="hud-btn-bet-plus" title="Mise +10"></div>
+                    <div id="btnMaxBet" class="hud-btn-max-bet" title="Tapis !"></div>
+
+                    <!-- Menu de recharge si le solde du joueur tombe à zéro -->
+                    <div id="zoneRecharge" class="recharge-overlay" style="display:none">
+                        <h3>💸 PLUS DE JETONS</h3>
+                        <p>Recharger le compte :</p>
+                        <div class="recharge-row">
+                            <input type="number" id="inputMontantRecharge" value="500" min="10">
+                            <button id="boutonRecharge" class="btn-premium">RECHARGER</button>
+                        </div>
+                    </div>
+
                 </div>
-
             </div>
 
-            <!-- Manivelle sur le côté droit -->
-            <div class="levier-zone">
-                <div id="levierPoignee" class="levier-poignee" title="Tirer pour jouer">
-                    <div class="levier-boule"></div>
-                    <div class="levier-tige"></div>
+            <!-- TABLE DES GAINS DE PRESTIGE (À DROITE DE LA MACHINE) -->
+            <div class="payout-card">
+                <p class="payout-title">— GAINS —</p>
+                <div class="payout-grid">
+                    <div class="payout-line"><span>7️⃣ 7️⃣ 7️⃣ (Jackpot)</span><strong>x100</strong></div>
+                    <div class="payout-line"><span>💎 💎 💎 (Diamant)</span><strong>x50</strong></div>
+                    <div class="payout-line"><span>💰 💰 💰 (Sacs d'or)</span><strong>x25</strong></div>
+                    <div class="payout-line"><span>🍀 🍀 🍀 (Trèfles)</span><strong>x10</strong></div>
+                    <div class="payout-line"><span>🔔 🔔 🔔 (Cloches)</span><strong>x5</strong></div>
+                    <div class="payout-line"><span>🍒 🍒 🍒 (Cerises)</span><strong>x4</strong></div>
+                    <div class="payout-divider"></div>
+                    <div class="payout-line"><span>2 Symboles Alignés</span><strong>x1</strong></div>
+                    <div class="payout-line"><span>🔔 Cloche n'importe où</span><strong>x1.6</strong></div>
                 </div>
-                <div class="levier-rail"></div>
             </div>
 
-        </div>
-
-        <!-- Table des gains -->
-        <div class="table-gains">
-            <p class="table-titre">— TABLE DES GAINS —</p>
-            <div class="gains-grille">
-                <span>7️⃣ 7️⃣ 7️⃣</span><span>×100</span>
-                <span>💎 💎 💎</span><span>×50</span>
-                <span>💰 💰 💰</span><span>×25</span>
-                <span>🍀 🍀 🍀</span><span>×10</span>
-                <span>🔔 🔔 🔔</span><span>×5</span>
-                <span>🍒 🍒 🍒</span><span>×4</span>
-                <span>2 identiques</span><span>×1</span>
-                <span>🔔 seule</span><span>×1.6</span>
-            </div>
         </div>
 
     </div>
-
-    <script src="../src/js/sons.js"></script>
+    
+    <!-- Liaison avec votre logique JavaScript externe -->
     <script src="../src/js/roulette.js"></script>
 </body>
-</html>

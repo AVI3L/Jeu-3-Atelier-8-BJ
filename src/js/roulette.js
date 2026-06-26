@@ -1,259 +1,234 @@
-const possibilité = [
-    { symbole: "7️⃣", poids: 3,  multiplicateur: 100 },
-    { symbole: "💎", poids: 5,  multiplicateur: 50  },
-    { symbole: "💰", poids: 3,  multiplicateur: 25  },
-    { symbole: "🍀", poids: 10, multiplicateur: 10  },
-    { symbole: "🔔", poids: 1,  multiplicateur: 5   },
-    { symbole: "🍒", poids: 19, multiplicateur: 4   },
-    { symbole: "🍋", poids: 3,  multiplicateur: 3   },
-    { symbole: "🥐", poids: 20, multiplicateur: 2   }
-];
 
-// Liste de tous les symboles (utilisée pendant l'animation)
-const tousLesSymboles = possibilité.map(p => p.symbole);
+        const possibilités = [
+            { symbole: "7️⃣", poids: 3,  multiplicateur: 100 },
+            { symbole: "💎", poids: 5,  multiplicateur: 50  },
+            { symbole: "💰", poids: 7,  multiplicateur: 25  },
+            { symbole: "🍀", poids: 12, multiplicateur: 10  },
+            { symbole: "🔔", poids: 15, multiplicateur: 5   },
+            { symbole: "🍒", poids: 20, multiplicateur: 4   },
+            { symbole: "🍋", poids: 22, multiplicateur: 3   },
+            { symbole: "🥐", poids: 25, multiplicateur: 2   }
+        ];
 
-const boutonLevier   = document.getElementById("boutonLevier");
-const messageStatut  = document.getElementById("messageStatut");
-const AfficheResultat = document.getElementById("AfficheResultat");
-const soldePieces    = document.getElementById("soldePieces");
-const inputMise      = document.getElementById("inputMise");
-const aperçuGains    = document.getElementById("aperçuGains");
-const zoneRecharge   = document.getElementById("zoneRecharge");
-const boutonRecharge = document.getElementById("boutonRecharge");
-const levierPoignee  = document.getElementById("levierPoignee");
+        document.addEventListener("DOMContentLoaded", () => {
+            
+            const boutonLevier   = document.getElementById("boutonLevier");
+            const levierPoignee  = document.getElementById("levierPoignee");
+            const messageStatut  = document.getElementById("messageStatut");
+            const AfficheResultat = document.getElementById("AfficheResultat");
+            const soldePieces    = document.getElementById("soldePieces");
+            const inputMise      = document.getElementById("inputMise");
+            const zoneRecharge   = document.getElementById("zoneRecharge");
+            const boutonRecharge = document.getElementById("boutonRecharge");
+            
+            const btnBetPlus     = document.getElementById("btnBetPlus");
+            const btnMaxBet      = document.getElementById("btnMaxBet");
 
-// Les 3 cases des rouleaux
-const sym1 = document.getElementById("sym1");
-const sym2 = document.getElementById("sym2");
-const sym3 = document.getElementById("sym3");
+            const fenetres = [
+                document.getElementById("fenetre1"),
+                document.getElementById("fenetre2"),
+                document.getElementById("fenetre3")
+            ];
+            const rouleau1 = document.getElementById("rouleau1");
+            const rouleau2 = document.getElementById("rouleau2");
+            const rouleau3 = document.getElementById("rouleau3");
 
-let solde = 100;
+            let solde = 500;
+            let enCoursDeSpin = false;
 
-// ══════════════════════════════════════════
-//  UTILITAIRES
-// ══════════════════════════════════════════
+            if (!boutonLevier || !rouleau1 || !rouleau2 || !rouleau3) {
+                console.error("❌ Roulette.js : Éléments HTML introuvables !");
+                return;
+            }
 
-// Affiche le gain maximum possible selon la mise actuelle
-function mettreAJourAperçu() {
-    const mise = parseInt(inputMise.value);
-    if (!isNaN(mise) && mise > 0) {
-        aperçuGains.textContent = `(Gain max : ${mise * 100} 🪙 avec 7️⃣7️⃣7️⃣)`;
-    } else {
-        aperçuGains.textContent = "(Mise invalide)";
-    }
-}
-
-// Retourne le multiplicateur d'un symbole donné
-function obtenirMultiplicateur(symbole) {
-    const item = possibilité.find(p => p.symbole === symbole);
-    return item ? item.multiplicateur : 0;
-}
-
-// Tire un symbole au hasard en tenant compte des poids
-function tirerSymbole() {
-    const totalPoids = possibilité.reduce((acc, p) => acc + p.poids, 0);
-    let rand = Math.floor(Math.random() * totalPoids);
-    for (const item of possibilité) {
-        rand -= item.poids;
-        if (rand < 0) return item.symbole;
-    }
-}
-
-// ══════════════════════════════════════════
-//  ANIMATION D'UN ROULEAU
-// ══════════════════════════════════════════
-
-/*
- * Fait tourner un rouleau pendant `dureeMs` millisecondes,
- * puis s'arrête sur `symboleFinal`.
- * Appelle `callback` quand c'est terminé.
- *
- * Principe : on change le symbole toutes les X ms.
- * X commence petit (rapide) et grandit vers la fin (ralentissement).
- */
-function tournerRouleau(elementSymbole, fenetre, symboleFinal, dureeMs, callback) {
-    const debut = Date.now();
-    let delai = 60; // vitesse initiale en ms
-
-    // Active la classe CSS de flou pendant la rotation
-    elementSymbole.classList.add("tourne");
-    fenetre.classList.remove("gagnant");
-
-    function prochainSymbole() {
-        const ecoule = Date.now() - debut;
-        const progression = ecoule / dureeMs; // 0.0 → 1.0
-
-        // Ralentissement : à partir de 60% du temps, le délai augmente
-        if (progression > 0.6) {
-            const t = (progression - 0.6) / 0.4; // 0.0 → 1.0 dans la phase de ralenti
-            delai = 60 + t * t * 300;             // de 60ms jusqu'à 360ms
-        }
-
-        // Affiche un symbole aléatoire pendant la rotation
-        elementSymbole.textContent = tousLesSymboles[Math.floor(Math.random() * tousLesSymboles.length)];
-
-        if (ecoule >= dureeMs) {
-            // Arrêt : on affiche le bon symbole et on enlève le flou
-            elementSymbole.classList.remove("tourne");
-            elementSymbole.textContent = symboleFinal;
-            if (callback) callback();
-        } else {
-            // Prochain tick
-            setTimeout(prochainSymbole, delai);
-        }
-    }
-
-    prochainSymbole();
-}
-
-// ══════════════════════════════════════════
-//  JEU PRINCIPAL
-// ══════════════════════════════════════════
-
-function jouerRoulette() {
-    const coutMise = parseInt(inputMise.value);
-
-    // Vérifications de base
-    if (isNaN(coutMise) || coutMise <= 0) {
-        messageStatut.textContent = "Veuillez entrer une mise valide (min 1 pièce) !";
-        return;
-    }
-    if (solde < coutMise) {
-        messageStatut.textContent = "Pas assez de pièces !";
-        zoneRecharge.style.display = "flex";
-        return;
-    }
-
-    // Déduire la mise et bloquer les boutons
-    solde -= coutMise;
-    soldePieces.textContent = solde;
-    boutonLevier.disabled = true;
-    inputMise.disabled = true;
-    zoneRecharge.style.display = "none";
-    AfficheResultat.textContent = "";
-    AfficheResultat.style.color = "";
-
-    // Retirer les effets de victoire précédents
-    document.querySelectorAll(".rouleau-fenetre").forEach(f => f.classList.remove("gagnant"));
-
-    // Tirer les 3 symboles à l'avance (on les connaît mais on les cache pendant l'animation)
-    const symbole1 = tirerSymbole();
-    const symbole2 = tirerSymbole();
-    const symbole3 = tirerSymbole();
-
-    messageStatut.textContent = "🎰 Les rouleaux tournent...";
-
-    // Récupère les fenêtres des rouleaux
-    const fenetres = document.querySelectorAll(".rouleau-fenetre");
-
-
-    // Les 3 rouleaux partent EN MÊME TEMPS mais s'arrêtent à des moments différents
-    tournerRouleau(sym1, fenetres[0], symbole1, 1400, () => {
-        messageStatut.textContent = "⏳ Encore deux...";
-    });
-    tournerRouleau(sym2, fenetres[1], symbole2, 2200, () => {
-        messageStatut.textContent = "⏳ Dernier rouleau...";
-    });
-    tournerRouleau(sym3, fenetres[2], symbole3, 3100, () => {
-
-                // ── Calcul du résultat ──
-                if (symbole1 === symbole2 && symbole2 === symbole3) {
-                    const multiplicateur = obtenirMultiplicateur(symbole1);
-                    const gain = coutMise * multiplicateur;
-                    solde += gain;
-                    messageStatut.textContent = `🎉 JACKPOT ! 3 × ${symbole1} — Gain : ${gain} pièces !`;
-                    AfficheResultat.textContent = `+${gain} 🪙`;
-                    AfficheResultat.style.color = "#ffd700";
-                    fenetres.forEach(f => f.classList.add("gagnant"));
+            function tirerSymbole() {
+                const totalPoids = possibilités.reduce((acc, p) => acc + p.poids, 0);
+                let rand = Math.floor(Math.random() * totalPoids);
+                for (const item of possibilités) {
+                    rand -= item.poids;
+                    if (rand < 0) return item.symbole;
                 }
-                else if (symbole1 === symbole2 || symbole2 === symbole3 || symbole1 === symbole3) {
-                    const gain = coutMise;
-                    solde += gain;
-                    messageStatut.textContent = `✨ 2 identiques ! Mise récupérée : ${gain} pièces.`;
-                    AfficheResultat.textContent = `+${gain} 🪙`;
-                    AfficheResultat.style.color = "#ffd700";
+                return possibilités[possibilités.length - 1].symbole;
+            }
+
+            function obtenirMultiplicateur(symbole) {
+                const item = possibilités.find(p => p.symbole === symbole);
+                return item ? item.multiplicateur : 0;
+            }
+
+            function animerRouleau(elementBande, symboleFinal, dureeTotale, callback) {
+                if (!elementBande) return;
+                const debut = Date.now();
+                let delai = 45;
+                
+                elementBande.classList.add("spinning");
+
+                function tourner() {
+                    const ecoule = Date.now() - debut;
+                    const progression = ecoule / dureeTotale;
+
+                    if (progression > 0.65) {
+                        const t = (progression - 0.65) / 0.35;
+                        delai = 45 + t * t * 240;
+                    }
+
+                    const indexHasard = Math.floor(Math.random() * possibilités.length);
+                    elementBande.textContent = possibilités[indexHasard].symbole;
+
+                    if (ecoule >= dureeTotale) {
+                        elementBande.classList.remove("spinning");
+                        elementBande.textContent = symboleFinal;
+                        if (callback) callback();
+                    } else {
+                        setTimeout(tourner, delai);
+                    }
                 }
-                else if (symbole1 === "🔔" || symbole2 === "🔔" || symbole3 === "🔔") {
+
+                tourner();
+            }
+
+            function lancerLeSpin() {
+                if (enCoursDeSpin) return;
+
+                const coutMise = parseInt(inputMise.value);
+
+                if (isNaN(coutMise) || coutMise <= 0) {
+                    messageStatut.textContent = "MISE INVALIDE";
+                    return;
+                }
+                if (solde < coutMise) {
+                    messageStatut.textContent = "SOLDE INSUFFISANT";
+                    zoneRecharge.style.display = "flex";
+                    return;
+                }
+
+                enCoursDeSpin = true;
+                solde -= coutMise;
+                soldePieces.textContent = solde;
+                
+                boutonLevier.disabled = true;
+                inputMise.disabled = true;
+                zoneRecharge.style.display = "none";
+                AfficheResultat.textContent = "";
+
+                fenetres.forEach(f => f.classList.remove("winner-glow"));
+
+                const symbole1 = tirerSymbole();
+                const symbole2 = tirerSymbole();
+                const symbole3 = tirerSymbole();
+
+                messageStatut.textContent = "ROULEAUX EN ROUTE...";
+
+                animerRouleau(rouleau1, symbole1, 1400, () => {
+                    messageStatut.textContent = "ROULEAU 1 PRÊT";
+                });
+
+                animerRouleau(rouleau2, symbole2, 2100, () => {
+                    messageStatut.textContent = "ROULEAU 2 PRÊT";
+                });
+
+                animerRouleau(rouleau3, symbole3, 2800, () => {
+                    calculerResultat(symbole1, symbole2, symbole3, coutMise);
+                });
+            }
+
+            function calculerResultat(s1, s2, s3, miseActive) {
+                let gain = 0;
+                let estJackpot = false;
+
+                if (s1 === s2 && s2 === s3) {
+                    const mult = obtenirMultiplicateur(s1);
+                    gain = miseActive * mult;
+                    if (s1 === "7️⃣") estJackpot = true;
+                    
+                    messageStatut.textContent = estJackpot ? "★ JACKPOT SUPRÊME ★" : "SUPER ALIGNEMENT !";
+                    AfficheResultat.textContent = `+${gain} PIÈCES`;
+                    AfficheResultat.style.color = "#ffd700";
+                    
+                    fenetres.forEach(f => f.classList.add("winner-glow"));
+                } 
+                else if (s1 === s2 || s2 === s3 || s1 === s3) {
+                    gain = miseActive;
+                    messageStatut.textContent = "PAIRE ALIGNÉE !";
+                    AfficheResultat.textContent = `REMBOURSÉ (+${gain})`;
+                    AfficheResultat.style.color = "#00ffcc";
+                } 
+                else if (s1 === "🔔" || s2 === "🔔" || s3 === "🔔") {
                     const multiplicateurCloche = obtenirMultiplicateur("🔔");
-                    const gain = Math.floor((coutMise * multiplicateurCloche) / 3);
-                    solde += gain;
-                    messageStatut.textContent = `🔔 Cloche ! Petit gain : ${gain} pièces.`;
-                    AfficheResultat.textContent = `+${gain} 🪙`;
-                    AfficheResultat.style.color = "#ffd700";
-                }
+                    gain = Math.floor((miseActive * multiplicateurCloche) / 3); 
+                    messageStatut.textContent = "TINTEMENT DE CLOCHE !";
+                    AfficheResultat.textContent = `BONUS (+${gain})`;
+                    AfficheResultat.style.color = "#ffaa00";
+                } 
                 else {
-                    messageStatut.textContent = "❌ Perdu ! Retentez votre chance.";
-                    AfficheResultat.textContent = `-${coutMise} 🪙`;
-                    AfficheResultat.style.color = "#ff4444";
+                    messageStatut.textContent = "ESSAYEZ ENCORE !";
+                    AfficheResultat.textContent = `-${miseActive} JETONS`;
+                    AfficheResultat.style.color = "#ff3300";
                 }
 
+                solde += gain;
                 soldePieces.textContent = solde;
 
-                // Réactiver les boutons
                 boutonLevier.disabled = false;
                 inputMise.disabled = false;
+                enCoursDeSpin = false;
 
-                // Afficher la recharge si plus assez de pièces
-                if (solde < coutMise || solde <= 0) {
+                if (solde <= 0 || solde < parseInt(inputMise.value)) {
                     zoneRecharge.style.display = "flex";
                 }
-    });
-}
+            }
 
-// ══════════════════════════════════════════
-//  MANIVELLE
-// ══════════════════════════════════════════
+            boutonLevier.addEventListener("click", lancerLeSpin);
+            if (levierPoignee) {
+                levierPoignee.addEventListener("click", lancerLeSpin);
+            }
 
-// Quand on clique sur la manivelle : animation + lancement du jeu
-levierPoignee.addEventListener("click", () => {
-    if (boutonLevier.disabled) return;
-    levierPoignee.classList.add("tire");
-    setTimeout(() => levierPoignee.classList.remove("tire"), 600);
-    jouerRoulette();
-});
+            if (btnBetPlus) {
+                btnBetPlus.addEventListener("click", () => {
+                    if (enCoursDeSpin) return;
+                    let current = parseInt(inputMise.value) || 0;
+                    inputMise.value = current + 10;
+                });
+            }
 
-boutonLevier.addEventListener("click", () => {
-    levierPoignee.classList.add("tire");
-    setTimeout(() => levierPoignee.classList.remove("tire"), 600);
-    jouerRoulette();
-});
+            if (btnMaxBet) {
+                btnMaxBet.addEventListener("click", () => {
+                    if (enCoursDeSpin) return;
+                    inputMise.value = solde;
+                });
+            }
 
-// ══════════════════════════════════════════
-//  RECHARGE
-// ══════════════════════════════════════════
+            if (boutonRecharge) {
+                boutonRecharge.addEventListener("click", () => {
+                    const montant = parseInt(document.getElementById("inputMontantRecharge").value);
+                    if (isNaN(montant) || montant < 10) return;
+                    solde = montant;
+                    soldePieces.textContent = solde;
+                    zoneRecharge.style.display = "none";
+                    AfficheResultat.textContent = "";
+                    messageStatut.textContent = "CRÉDITS CHARGÉS !";
+                });
+            }
 
-boutonRecharge.addEventListener("click", () => {
-    const valeur = parseInt(document.getElementById("inputMontantRecharge").value);
-    if (isNaN(valeur) || valeur < 10) {
-        document.getElementById("inputMontantRecharge").style.borderColor = "#ff4444";
-        return;
-    }
-    solde = valeur;
-    soldePieces.textContent = solde;
-    zoneRecharge.style.display = "none";
-    AfficheResultat.textContent = "";
-    messageStatut.textContent = `💰 Solde rechargé à ${valeur} pièces ! Bonne chance !`;
-    document.querySelectorAll(".rouleau-fenetre").forEach(f => f.classList.remove("gagnant"));
-    mettreAJourAperçu();
-});
+            const btnAppliquer = document.getElementById("btnAppliquer");
+            if (btnAppliquer) {
+                btnAppliquer.addEventListener("click", () => {
+                    const inputSoldeDepart = document.getElementById("inputSoldeDepart");
+                    if (!inputSoldeDepart) return;
+                    const depart = parseInt(inputSoldeDepart.value);
+                    if (isNaN(depart) || depart < 10) return;
+                    solde = depart;
+                    soldePieces.textContent = solde;
+                    zoneRecharge.style.display = "none";
+                    messageStatut.textContent = "COMPTE CONFIGURÉ";
+                });
+            }
 
-// ══════════════════════════════════════════
-//  SOLDE DE DÉPART
-// ══════════════════════════════════════════
+            function initialiserMachine() {
+                rouleau1.textContent = "7️⃣";
+                rouleau2.textContent = "🍒";
+                rouleau3.textContent = "🍀";
+            }
 
-document.getElementById("btnAppliquer").addEventListener("click", () => {
-    const valeur = parseInt(document.getElementById("inputSoldeDepart").value);
-    if (isNaN(valeur) || valeur < 10) return;
-    solde = valeur;
-    soldePieces.textContent = solde;
-    zoneRecharge.style.display = "none";
-    messageStatut.textContent = `✅ Solde défini à ${valeur} pièces.`;
-    mettreAJourAperçu();
-});
-
-// ══════════════════════════════════════════
-//  INIT
-// ══════════════════════════════════════════
-
-inputMise.addEventListener("input", mettreAJourAperçu);
-mettreAJourAperçu();
+            initialiserMachine();
+        });
