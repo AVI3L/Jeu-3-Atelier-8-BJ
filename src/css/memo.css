@@ -1,11 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
 
-body.memo-page{
+/* body.memo-page{
     background: conic-gradient(#FD7272 90deg, #F8EFBA 90deg 180deg,#FD7272 90deg 270deg, #F8EFBA 270deg);
     background-repeat: repeat;
     background-size: 60px 60px;
     background-position: top left;
-}
+} */
 
 .memo-header{
     display: flex;
@@ -114,8 +114,7 @@ body {
     margin:0;padding:0;
     line-height:1.5;
 }
-strong, b {font-weight:bold;}
-#wrapper {
+body.memo-page {
     position:relative;
     margin:0 auto;padding:1.2rem;
     width:100%;height:auto;min-height:725px;
@@ -123,10 +122,10 @@ strong, b {font-weight:bold;}
     background:var(--reversecolor);
     color:var(--textcolor);
     text-align:left;
-    background-image:url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/358203/MedallionRugMedium.jpg");
-  background-size:100% 100%;
+    background-image:url("../img/carpet.jpg");
+    background-size:100% 100%;
 }
-#cardtable {
+.memo-main {
   width:98%;
   height:620px;
   background:radial-gradient(rgba(53,168,109,0.95) 0%, rgba(20,76,44,0.9) 64%,#784428 65%,#B78B5D 66%,#B7895A 67%,#835231 70%,#92623D 96%,#784428 99%,#B78B5D 100%);
