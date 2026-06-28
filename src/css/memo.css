@@ -133,6 +133,10 @@ button {
     padding:0.3rem 0.5rem 0.3rem 0.5rem;
     cursor:pointer;
     margin:10px 20px 10px 20px;
+    -webkit-border-radius:12px;
+    -moz-border-radius:12px;
+    -ms-border-radius:12px;
+    -o-border-radius:12px;
 }
 
 button:hover {
@@ -149,4 +153,8 @@ select {
     height:auto;
     border-radius:8px;
     margin:10px 0;
+    -webkit-border-radius:8px;
+    -moz-border-radius:8px;
+    -ms-border-radius:8px;
+    -o-border-radius:8px;
 }
