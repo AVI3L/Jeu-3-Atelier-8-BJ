@@ -1,4 +1,33 @@
 
+        // ========================================================
+        // SONS CASINO - Remplacés le 28/06/2026
+        // Sources : orangefreesounds.com (CC BY-NC 4.0 - Alexander)
+        // 3 vraies bandes son de casino :
+        //   spin-casino.mp3    → machine à sous mécanique vintage qui tourne (6 sec)
+        //   win-casino.mp3     → victoire avec pièces qui tombent (8 sec)
+        //   jackpot-casino.mp3 → jackpot avec avalanche de pièces (10 sec)
+        // ========================================================
+        const sonSpin    = new Audio("../src/sounds/spin-casino.mp3");
+        const sonGain    = new Audio("../src/sounds/win-casino.mp3");
+        const sonJackpot = new Audio("../src/sounds/jackpot-casino.mp3");
+
+        // Fonction utilitaire : arrête un son et le remet au début avant de le jouer
+        // dureeMax (optionnel) : coupe le son automatiquement après X millisecondes
+        function jouerSon(audio, dureeMax) {
+            audio.pause();
+            audio.currentTime = 0;
+            audio.play().catch(() => {});
+            if (dureeMax) {
+                setTimeout(() => { audio.pause(); audio.currentTime = 0; }, dureeMax);
+            }
+        }
+
+        // Arrête le son de spin (appelé quand les rouleaux s'immobilisent)
+        function arreterSpin() {
+            sonSpin.pause();
+            sonSpin.currentTime = 0;
+        }
+
         const possibilités = [
             { symbole: "7️⃣", poids: 3,  multiplicateur: 100 },
             { symbole: "💎", poids: 5,  multiplicateur: 50  },
@@ -119,6 +148,10 @@
 
                 messageStatut.textContent = "ROULEAUX EN ROUTE...";
 
+                // SON : démarre le bruit de spin quand les rouleaux partent
+                sonSpin.loop = true;
+                jouerSon(sonSpin);
+
                 animerRouleau(rouleau1, symbole1, 1400, () => {
                     messageStatut.textContent = "ROULEAU 1 PRÊT";
                 });
@@ -128,6 +161,8 @@
                 });
 
                 animerRouleau(rouleau3, symbole3, 2800, () => {
+                    // SON : arrête le spin quand le dernier rouleau s'immobilise
+                    arreterSpin();
                     calculerResultat(symbole1, symbole2, symbole3, coutMise);
                 });
             }
@@ -144,21 +179,30 @@
                     messageStatut.textContent = estJackpot ? "★ JACKPOT SUPRÊME ★" : "SUPER ALIGNEMENT !";
                     AfficheResultat.textContent = `+${gain} PIÈCES`;
                     AfficheResultat.style.color = "#ffd700";
-                    
+
                     fenetres.forEach(f => f.classList.add("winner-glow"));
+
+                    // SON : jackpot pour les triple 7, son de gain normal pour les autres triples
+                    if (estJackpot) {
+                        jouerSon(sonJackpot); // Son jackpot spécial (triple 7)
+                    } else {
+                        jouerSon(sonGain, 3000);    // Son victoire standard coupé à 3 sec
+                    }
                 } 
                 else if (s1 === s2 || s2 === s3 || s1 === s3) {
                     gain = miseActive;
                     messageStatut.textContent = "PAIRE ALIGNÉE !";
                     AfficheResultat.textContent = `REMBOURSÉ (+${gain})`;
                     AfficheResultat.style.color = "#00ffcc";
-                } 
+                    jouerSon(sonGain, 3000); // SON : victoire pour une paire, coupé à 3 sec
+                }
                 else if (s1 === "🔔" || s2 === "🔔" || s3 === "🔔") {
                     const multiplicateurCloche = obtenirMultiplicateur("🔔");
-                    gain = Math.floor((miseActive * multiplicateurCloche) / 3); 
+                    gain = Math.floor((miseActive * multiplicateurCloche) / 3);
                     messageStatut.textContent = "TINTEMENT DE CLOCHE !";
                     AfficheResultat.textContent = `BONUS (+${gain})`;
                     AfficheResultat.style.color = "#ffaa00";
+                    jouerSon(sonGain, 3000); // SON : victoire pour le bonus cloche, coupé à 3 sec
                 } 
                 else {
                     messageStatut.textContent = "ESSAYEZ ENCORE !";
