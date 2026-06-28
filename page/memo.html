@@ -10,41 +10,47 @@
 </head>
 
 <body class="memo-page">
-
-    <audio src="../src/audio/You Win !.mp3" class="WinSong"></audio>
-
     <header class="memo-header">
         <div class="left">
 
             <div class="title">
                 <p class="eyebrow">Jeu mémoire</p>
                 <h1>Memory Cards</h1>
-        </div>
+            </div>
 
-        <div class="controls">
-            <div class="select">
-                <select id="difficulty" aria-label="Choisir la difficulté">
-                    <option value="easy">Facile (8)</option>
-                    <option value="medium">Moyen (16)</option>
-                    <option value="hard">Difficile (24)</option>
-                </select>
-            </div>
-            
-            <div class="button">
-                <button id="restartBtn" type="button">
-                    Nouvelle partie
-                </button>
+            <div class="controls">
+                <div class="select">
+                    <select id="difficulty" aria-label="Choisir la difficulté">
+                        <option value="easy">Facile (8)</option>
+                        <option value="medium">Moyen (16)</option>
+                        <option value="hard">Difficile (24)</option>
+                    </select>
+                </div>
+
+                <div class="button">
+                    <button id="restartBtn" type="button">
+                        Nouvelle partie
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="right">
-        <div class="score">
+        <div class="right">
+            <div class="score">
                 <p>Coups : <span id="score">0</span></p>
             </div>
+
             <div class="timer">
-                <p>Temps : <span id="timer">0</span> secondes</p>
+                <p>Temps : <span id="timer">0</span>s</p>
             </div>
-    </div>
+
+            <div class="pairs">
+                <p>Paires : <span id="pairs">0</span>/<span id="totalPairs">8</span></p>
+            </div>
+
+            <div class="combo">
+                <p>Combo : <span id="combo">x0</span></p>
+            </div>
+        </div>
     </header>
 
     <main class="memo-main">
@@ -60,9 +66,10 @@
         let game = new Game();
 
         restartBtn.addEventListener("click", () => {
+            game.stopTimer();
+            game.stopAllSounds();
             game = new Game(difficultySelect.value);
         });
-
     </script>
 </body>
 

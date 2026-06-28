@@ -110,6 +110,11 @@ body.memo-page {
 .card-content {
     font-size: 1.5rem;
     margin-right: 4px;
+    transform: rotateY(180deg);
+    -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
+    -ms-transform: rotateY(180deg);
+    -o-transform: rotateY(180deg);
 }
 
 .text-red {
@@ -134,6 +139,12 @@ body.memo-page {
     -moz-transform: rotateY(180deg);
     -ms-transform: rotateY(180deg);
     -o-transform: rotateY(180deg);
+}
+
+.combo.active {
+    color: gold;
+    font-weight: bold;
+    text-shadow: 0 0 10px orange;
 }
 
 h1,
