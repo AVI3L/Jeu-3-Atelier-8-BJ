@@ -1,48 +1,60 @@
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
 
 :root {
-    --textcolor:white;
-    --accentcolor:#269;
-    --lightaccentcolor:#9df;
-    --reversecolor:black;
+    --textcolor: white;
+    --accentcolor: #269;
+    --lightaccentcolor: #9df;
+    --reversecolor: black;
 }
 
-*, *:before, *:after {box-sizing: border-box;}
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
 
 html {
-    font-size:16px;
-    font-family:Trebuchet,sans-serif;
+    font-size: 16px;
+    font-family: Trebuchet, sans-serif;
 }
 
 body {
-    background:var(--accentcolor);
-    color:var(--reversecolor);
-    margin:0;padding:0;
-    line-height:1.5;
+    background: var(--accentcolor);
+    color: var(--reversecolor);
+    margin: 0;
+    padding: 0;
+    line-height: 1.5;
 }
+
 body.memo-page {
-    position:relative;
-    margin:0 auto;padding:1.2rem;
-    width:100%;height:auto;min-height:725px;
-    min-width:320px;max-width:1000px;
-    background:var(--reversecolor);
-    color:var(--textcolor);
-    text-align:left;
-    background-image:url("../img/carpet.jpg");
-    background-size:100% 100%;
+    position: relative;
+    margin: 0 auto;
+    padding: 1.2rem;
+    width: 100%;
+    height: auto;
+    min-height: 90vh;
+    min-width: 320px;
+    max-width: 1000px;
+    background: var(--reversecolor);
+    color: var(--textcolor);
+    text-align: left;
+    background-image: url("../img/carpet.jpg");
+    background-size: 100% 100%;
 }
 
 .memo-main {
-  width:98%;
-  height:620px;
-  background:radial-gradient(rgba(53,168,109,0.95) 0%, rgba(20,76,44,0.9) 64%,#784428 65%,#B78B5D 66%,#B7895A 67%,#835231 70%,#92623D 96%,#784428 99%,#B78B5D 100%);
-  border:3px solid #642;
-  margin:0 auto;
-  border-radius:50%;
-  padding:14% 10% 0 10%;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    max-width: 900px;
+    min-height: 350px;
+    margin: 0 auto;
+    background: radial-gradient(rgba(53, 168, 109, 0.95) 0%, rgba(20, 76, 44, 0.9) 64%, #784428 65%, #B78B5D 66%, #B7895A 67%, #835231 70%, #92623D 96%, #784428 99%, #B78B5D 100%);
+    border: 3px solid #642;
+    border-radius: 50%;
+    padding: 8%;
 }
 
-.memo-header{
+.memo-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -53,8 +65,10 @@ body.memo-page {
 }
 
 .card {
-    width: 60px;
-    height: 90px;
+    width: clamp(45px, 7vw, 70px);
+    aspect-ratio: 2 / 3;
+    height: auto;
+
     transition: 500ms;
     -webkit-transition: 500ms;
     -moz-transition: 500ms;
@@ -62,14 +76,19 @@ body.memo-page {
     -o-transition: 500ms;
 }
 
-.memo-main .game{
+.memo-main .game {
     display: flex;
-    gap: 6px;
     flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: clamp(4px, 1vw, 10px);
+
+    width: 100%;
+    height: 100%;
 }
 
-.card-back{
-    background: repeating-linear-gradient(45deg, #dfe6e9 0px, #dfe6e9 2px, transparent 2px, transparent 20px), repeating-linear-gradient(135deg, #dfe6e9 0px, #dfe6e9 2px, transparent 2px, transparent 20px), radial-gradient(#ff7675,#eb2f06);
+.card-back {
+    background: repeating-linear-gradient(45deg, #dfe6e9 0px, #dfe6e9 2px, transparent 2px, transparent 20px), repeating-linear-gradient(135deg, #dfe6e9 0px, #dfe6e9 2px, transparent 2px, transparent 20px), radial-gradient(#ff7675, #eb2f06);
     border: solid #000 2px;
     border-radius: 10px;
     -webkit-border-radius: 10px;
@@ -78,7 +97,7 @@ body.memo-page {
     -o-border-radius: 10px;
 }
 
-.card-front{
+.card-front {
     background: #FFF;
     border: solid #000 2px;
     border-radius: 10px;
@@ -88,13 +107,16 @@ body.memo-page {
     -o-border-radius: 10px;
 }
 
-.card-content {font-size:1.5rem; margin-right: 4px;}
+.card-content {
+    font-size: 1.5rem;
+    margin-right: 4px;
+}
 
-.text-red{
+.text-red {
     color: #eb2f06;
 }
 
-.text-black{
+.text-black {
     color: #000;
 }
 
@@ -106,7 +128,7 @@ body.memo-page {
     -o-transform: rotateY(90deg);
 }
 
-.final-flip{
+.final-flip {
     transform: rotateY(180deg);
     -webkit-transform: rotateY(180deg);
     -moz-transform: rotateY(180deg);
@@ -114,47 +136,120 @@ body.memo-page {
     -o-transform: rotateY(180deg);
 }
 
-h1, h2, h3, h4 {
-    color:var(--textcolor);
-    text-align:center;
+h1,
+h2,
+h3,
+h4 {
+    color: var(--textcolor);
+    text-align: center;
 }
-h1 {font-size:2rem;margin:0 0 1rem 0;}
-h2 {font-size:1.5rem;margin:0 0 0 0;}
-p {font-size:1.2rem;margin:0;}
+
+h1 {
+    font-size: 2rem;
+    margin: 0 0 1rem 0;
+}
+
+h2 {
+    font-size: 1.5rem;
+    margin: 0 0 0 0;
+}
+
+p {
+    font-size: 1.2rem;
+    margin: 0;
+}
 
 button {
-    -webkit-appearance:none;
-    font-size:1.4rem;
-    font-weight:normal;
-    background:var(--lightaccentcolor);
-    border-radius:12px;
-    border:2px solid var(--accentcolor);
-    color:var(--reversecolor);
-    padding:0.3rem 0.5rem 0.3rem 0.5rem;
-    cursor:pointer;
-    margin:10px 20px 10px 20px;
-    -webkit-border-radius:12px;
-    -moz-border-radius:12px;
-    -ms-border-radius:12px;
-    -o-border-radius:12px;
+    -webkit-appearance: none;
+    font-size: 1.4rem;
+    font-weight: normal;
+    background: var(--lightaccentcolor);
+    border-radius: 12px;
+    border: 2px solid var(--accentcolor);
+    color: var(--reversecolor);
+    padding: 0.3rem 0.5rem 0.3rem 0.5rem;
+    cursor: pointer;
+    margin: 10px 20px 10px 20px;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    -ms-border-radius: 12px;
+    -o-border-radius: 12px;
 }
 
 button:hover {
-    color:var(--textcolor);
-    background:var(--accentcolor);
+    color: var(--textcolor);
+    background: var(--accentcolor);
 }
 
 select {
-    background:var(--lightaccentcolor);
-    width:auto;
-    font-size:inherit;
-    font-weight:normal;
-    text-align:center;
-    height:auto;
-    border-radius:8px;
-    margin:10px 0;
-    -webkit-border-radius:8px;
-    -moz-border-radius:8px;
-    -ms-border-radius:8px;
-    -o-border-radius:8px;
+    background: var(--lightaccentcolor);
+    width: auto;
+    font-size: inherit;
+    font-weight: normal;
+    text-align: center;
+    height: auto;
+    border-radius: 8px;
+    margin: 10px 0;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -ms-border-radius: 8px;
+    -o-border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+
+    .memo-header {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+    }
+
+    .controls {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+    }
+
+    .right {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    button {
+        width: 100%;
+        max-width: 320px;
+        margin: 10px 0;
+    }
+
+    select {
+        width: 100%;
+        max-width: 320px;
+    }
+
+    h1 {
+        font-size: 1.6rem;
+    }
+
+    p {
+        font-size: 1rem;
+    }
+
+    button {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width:480px) {
+
+    .memo-main {
+        aspect-ratio: 1 / 1;
+        border-radius: 20px;
+        padding: 16px;
+    }
+
+    .card {
+        width: clamp(38px, 12vw, 55px);
+    }
 }
