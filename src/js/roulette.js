@@ -168,7 +168,7 @@
 
                     fenetres.forEach(f => f.classList.add("winner-glow"));
                     if (estJackpot) {
-                        jouerSon(sonJackpot); /
+                        jouerSon(sonJackpot);
                     } else {
                         jouerSon(sonGain, 3000);    
                     }
