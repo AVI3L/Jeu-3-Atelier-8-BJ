@@ -1,3 +1,20 @@
+        const sonSpin    = new Audio("../src/sounds/spin-casino.mp3");
+        const sonGain    = new Audio("../src/sounds/win-casino.mp3");
+        const sonJackpot = new Audio("../src/sounds/jackpot-casino.mp3");
+
+        function jouerSon(audio, dureeMax) {
+            audio.pause();
+            audio.currentTime = 0;
+            audio.play().catch(() => {});
+            if (dureeMax) {
+                setTimeout(() => { audio.pause(); audio.currentTime = 0; }, dureeMax);
+            }
+        }
+
+        function arreterSpin() {
+            sonSpin.pause();
+            sonSpin.currentTime = 0;
+        }
 
         const possibilités = [
             { symbole: "7️⃣", poids: 3,  multiplicateur: 100 },
@@ -119,6 +136,9 @@
 
                 messageStatut.textContent = "ROULEAUX EN ROUTE...";
 
+                sonSpin.loop = true;
+                jouerSon(sonSpin);
+
                 animerRouleau(rouleau1, symbole1, 1400, () => {
                     messageStatut.textContent = "ROULEAU 1 PRÊT";
                 });
@@ -128,6 +148,7 @@
                 });
 
                 animerRouleau(rouleau3, symbole3, 2800, () => {
+                    arreterSpin();
                     calculerResultat(symbole1, symbole2, symbole3, coutMise);
                 });
             }
@@ -144,21 +165,28 @@
                     messageStatut.textContent = estJackpot ? "★ JACKPOT SUPRÊME ★" : "SUPER ALIGNEMENT !";
                     AfficheResultat.textContent = `+${gain} PIÈCES`;
                     AfficheResultat.style.color = "#ffd700";
-                    
+
                     fenetres.forEach(f => f.classList.add("winner-glow"));
+                    if (estJackpot) {
+                        jouerSon(sonJackpot); /
+                    } else {
+                        jouerSon(sonGain, 3000);    
+                    }
                 } 
                 else if (s1 === s2 || s2 === s3 || s1 === s3) {
                     gain = miseActive;
                     messageStatut.textContent = "PAIRE ALIGNÉE !";
                     AfficheResultat.textContent = `REMBOURSÉ (+${gain})`;
                     AfficheResultat.style.color = "#00ffcc";
-                } 
+                    jouerSon(sonGain, 3000);
+                }
                 else if (s1 === "🔔" || s2 === "🔔" || s3 === "🔔") {
                     const multiplicateurCloche = obtenirMultiplicateur("🔔");
-                    gain = Math.floor((miseActive * multiplicateurCloche) / 3); 
+                    gain = Math.floor((miseActive * multiplicateurCloche) / 3);
                     messageStatut.textContent = "TINTEMENT DE CLOCHE !";
                     AfficheResultat.textContent = `BONUS (+${gain})`;
                     AfficheResultat.style.color = "#ffaa00";
+                    jouerSon(sonGain, 3000); 
                 } 
                 else {
                     messageStatut.textContent = "ESSAYEZ ENCORE !";
