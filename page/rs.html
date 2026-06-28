@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regles des jeux</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #f5f0df;
+            background: #101010;
+        }
+
+        main {
+            width: min(980px, calc(100% - 32px));
+            margin: 0 auto;
+            padding: 40px 0;
+        }
+
+        header {
+            margin-bottom: 28px;
+            border-bottom: 1px solid #c9a84c;
+            padding-bottom: 18px;
+        }
+
+        h1,
+        h2 {
+            margin: 0;
+            color: #f6d36b;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 6vw, 3.5rem);
+        }
+
+        h2 {
+            margin-bottom: 12px;
+            font-size: 1.5rem;
+        }
+
+        p {
+            margin: 0 0 12px;
+        }
+
+        section {
+            margin: 22px 0;
+            border: 1px solid rgba(201, 168, 76, 0.35);
+            border-radius: 8px;
+            padding: 22px;
+            background: #171717;
+        }
+
+        ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .intro {
+            max-width: 720px;
+            color: #d7cfb9;
+        }
+
+        .links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 24px;
+        }
+
+        a {
+            display: inline-block;
+            border: 1px solid #c9a84c;
+            border-radius: 6px;
+            padding: 9px 14px;
+            color: #f6d36b;
+            text-decoration: none;
+        }
+
+        a:hover,
+        a:focus {
+            color: #101010;
+            background: #f6d36b;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <header>
+            <h1>Regles des jeux</h1>
+            <p class="intro">Cette page explique simplement le fonctionnement des trois projets disponibles dans le menu principal.</p>
+        </header>
+
+        <section>
+            <h2>Roulette / Machine a sous</h2>
+            <p>Le joueur lance une machine a sous avec trois rouleaux. Le but est d'obtenir les meilleurs symboles possibles pour gagner des pieces.</p>
+            <ul>
+                <li>Le solde de depart peut etre regle avant de jouer.</li>
+                <li>Chaque lancer coute le montant indique dans la mise.</li>
+                <li>Le bouton de lancement ou le levier lance les trois rouleaux.</li>
+                <li>Le bouton de mise ajoute 10 pieces a la mise.</li>
+                <li>Le bouton de mise maximum place tout le solde disponible.</li>
+                <li>Trois symboles identiques donnent un gain selon le multiplicateur affiche dans le tableau des gains.</li>
+                <li>Deux symboles identiques remboursent la mise.</li>
+                <li>Une cloche presente sur un rouleau donne un petit bonus.</li>
+                <li>Si le solde devient insuffisant, une zone de recharge permet de remettre des pieces.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Memory Cards</h2>
+            <p>Le joueur retourne des cartes pour retrouver toutes les paires. Le but est de terminer la grille avec le moins de coups possible.</p>
+            <ul>
+                <li>Trois difficultes sont disponibles : facile avec 8 cartes, moyen avec 16 cartes et difficile avec 24 cartes.</li>
+                <li>Le joueur retourne deux cartes a chaque tour.</li>
+                <li>Si les deux cartes ont le meme symbole, la paire reste visible.</li>
+                <li>Si les cartes sont differentes, elles se retournent apres un court delai.</li>
+                <li>Le compteur de coups augmente a chaque carte retournee.</li>
+                <li>Le chronometre demarre avec la partie et s'arrete quand toutes les paires sont trouvees.</li>
+                <li>Le combo augmente quand plusieurs paires sont trouvees a la suite.</li>
+                <li>Le bouton Nouvelle partie relance le jeu avec la difficulte choisie.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Blackjack</h2>
+            <p>Le joueur affronte la banque. Le but est d'avoir un score plus proche de 21 que la banque, sans depasser 21.</p>
+            <ul>
+                <li>Le joueur et la banque recoivent chacun deux cartes au debut.</li>
+                <li>Les cartes numeriques valent leur valeur, les figures valent 10 et l'as vaut 11 ou 1 selon le score.</li>
+                <li>Le bouton Tirer ajoute une carte a la main du joueur.</li>
+                <li>Le bouton Rester termine le tour du joueur et laisse jouer la banque.</li>
+                <li>La banque tire automatiquement tant que son score est inferieur a 17.</li>
+                <li>Si le joueur depasse 21, il perd immediatement.</li>
+                <li>Si la banque depasse 21, le joueur gagne.</li>
+                <li>Si personne ne depasse, le score le plus eleve gagne. En cas d'egalite, la partie est nulle.</li>
+                <li>Un blackjack est obtenu avec un as et une carte valant 10 des le debut.</li>
+            </ul>
+        </section>
+
+        <div class="links">
+            <a href="../index.html">Retour au menu</a>
+            <a href="./roulette.html">Jouer a la machine a sous</a>
+            <a href="./memo.html">Jouer au Memory</a>
+            <a href="./bl.html">Jouer au Blackjack</a>
+        </div>
+    </main>
+</body>
+
+</html>
