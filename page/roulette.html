@@ -24,22 +24,22 @@
         <div class="main-content">
 
             <div class="slot-machine-viewport">
-                <!-- Image de fond située dans votre dossier img -->
+              
                 <img id="slotBg" class="slot-machine-image" 
                      src="../src/img/slot_machine.png" 
                      alt="Machine"
                      onerror="this.onerror=null; this.src='http://googleusercontent.com/image_generation_content/263';">
 
-                <!-- Couche cliquable et interactive positionnée par-dessus votre image -->
+            
                 <div class="interactive-overlay">
 
-                    <!-- Écran de statut texte supérieur -->
+                    
                     <div class="led-status-screen">
                         <p id="messageStatut">PRÊT À JOUER</p>
                         <h2 id="AfficheResultat"></h2>
                     </div>
 
-                    <!-- Les 3 cases transparentes alignées avec l'image où s'affichent vos émojis -->
+                    
                     <div class="reels-container">
                         <div id="fenetre1" class="reel-window">
                             <span id="rouleau1">7️⃣</span>
@@ -52,7 +52,7 @@
                         </div>
                     </div>
 
-                    <!-- Afficheurs digitaux du solde et de la mise active -->
+                  
                     <div class="hud-balance">
                         <span id="soldePieces">500</span>
                     </div>
@@ -61,17 +61,15 @@
                         <input type="number" id="inputMise" value="10" min="1">
                     </div>
 
-                    <!-- Zone d'action invisible calée sur le bouton physique "SPIN" de l'image -->
+                   
                     <button id="boutonLevier" class="physical-spin-button" title="Lancer !"></button>
 
-                    <!-- Zone d'action sur la manivelle mécanique à droite -->
                     <div id="levierPoignee" class="lever-hotspot" title="Actionner le levier !"></div>
 
-                    <!-- Boutons interactifs du bas de la console de l'image ("BET" et "HOTE!") -->
+                  
                     <div id="btnBetPlus" class="hud-btn-bet-plus" title="Mise +10"></div>
                     <div id="btnMaxBet" class="hud-btn-max-bet" title="Tapis !"></div>
 
-                    <!-- Menu de recharge si le solde du joueur tombe à zéro -->
                     <div id="zoneRecharge" class="recharge-overlay" style="display:none">
                         <h3>💸 PLUS DE JETONS</h3>
                         <p>Recharger le compte :</p>
@@ -84,18 +82,20 @@
                 </div>
             </div>
 
-            <!-- TABLE DES GAINS DE PRESTIGE (À DROITE DE LA MACHINE) -->
             <div class="payout-card">
                 <p class="payout-title">— GAINS —</p>
                 <div class="payout-grid">
-                    <div class="payout-line"><span>7️⃣ 7️⃣ 7️⃣ (Jackpot)</span><strong>x100</strong></div>
-                    <div class="payout-line"><span>💎 💎 💎 (Diamant)</span><strong>x50</strong></div>
-                    <div class="payout-line"><span>💰 💰 💰 (Sacs d'or)</span><strong>x25</strong></div>
-                    <div class="payout-line"><span>🍀 🍀 🍀 (Trèfles)</span><strong>x10</strong></div>
-                    <div class="payout-line"><span>🔔 🔔 🔔 (Cloches)</span><strong>x5</strong></div>
-                    <div class="payout-line"><span>🍒 🍒 🍒 (Cerises)</span><strong>x4</strong></div>
+          
+                    <div class="payout-line"><span>7️⃣ 7️⃣ 7️⃣ </span><strong>x100</strong></div>
+                    <div class="payout-line"><span>💎 💎 💎 </span><strong>x50</strong></div>
+                    <div class="payout-line"><span>💰 💰 💰 </span><strong>x25</strong></div>
+                    <div class="payout-line"><span>🍀 🍀 🍀 </span><strong>x10</strong></div>
+                    <div class="payout-line"><span>🔔 🔔 🔔 </span><strong>x5</strong></div>
+                    <div class="payout-line"><span>🍒 🍒 🍒 </span><strong>x4</strong></div>
+                    <div class="payout-line"><span>🍋 🍋 🍋 </span><strong>x3</strong></div>
+                    <div class="payout-line"><span>🥐 🥐 🥐 </span><strong>x2</strong></div>
                     <div class="payout-divider"></div>
-                    <div class="payout-line"><span>2 Symboles Alignés</span><strong>x1</strong></div>
+                    <div class="payout-line"><span>2 Symboles Identiques</span><strong>x1</strong></div>
                     <div class="payout-line"><span>🔔 Cloche n'importe où</span><strong>x1.6</strong></div>
                 </div>
             </div>
@@ -103,7 +103,5 @@
         </div>
 
     </div>
-    
-    <!-- Liaison avec votre logique JavaScript externe -->
-    <script src="../src/js/roulette.js"></script>
+      <script src="../src/js/roulette.js"></script>
 </body>
