@@ -10,9 +10,6 @@
 </head>
 
 <body class="memo-page">
-
-    <audio src="../src/audio/You Win !.mp3" class="WinSong"></audio>
-
     <header class="memo-header">
         <div class="left">
 
@@ -60,6 +57,7 @@
         let game = new Game();
 
         restartBtn.addEventListener("click", () => {
+            game.stopAllSounds();
             game = new Game(difficultySelect.value);
         });
     </script>

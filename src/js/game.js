@@ -40,7 +40,27 @@ class Game {
 
         // console.log(newCards);
 
-        this.winSong = document.querySelector(".WinSong");
+        this.combo = 0;
+
+        this.winSong = new Audio("../src/audio/You Win !.mp3");
+
+        this.flipSound = new Audio("../src/audio/Flip.wav");
+
+        this.comboSounds = [
+            new Audio("../src/audio/ComboA.wav"),
+            new Audio("../src/audio/ComboCis.wav"),
+            new Audio("../src/audio/ComboDis.wav"),
+            new Audio("../src/audio/ComboF.wav"),
+            new Audio("../src/audio/ComboG.wav"),
+            new Audio("../src/audio/ComboGH.wav"),
+            new Audio("../src/audio/ComboH.wav"),
+            new Audio("../src/audio/ComboCisH.wav"),
+            new Audio("../src/audio/ComboDisH.wav"),
+            new Audio("../src/audio/ComboFH.wav"),
+            new Audio("../src/audio/ComboFinnal.wav")
+        ];
+
+        this.flipSound.volume = 0.25;
 
         this.deck = new Deck().parse(newCards);
 
@@ -59,6 +79,10 @@ class Game {
         const isMatch = this.firstCard.getSymbol() === this.secondCard.getSymbol();
 
         if (isMatch) {
+            this.combo++;
+            this.playCombo();
+
+
             this.firstCard.matched = true;
             this.secondCard.matched = true;
 
@@ -67,7 +91,7 @@ class Game {
             this.checkWin();
 
         } else {
-
+            this.combo = 0;
             setTimeout(() => {
                 this.firstCard.flipped = false;
                 this.secondCard.flipped = false;
@@ -78,6 +102,17 @@ class Game {
 
             }, 1500);
         }
+    }
+
+    playCombo() {
+        const sound = this.comboSounds[
+            Math.min(this.combo - 1, this.comboSounds.length - 1)
+        ];
+
+        sound.volume = 0.25;
+
+        sound.currentTime = 0;
+        sound.play();
     }
 
     resetTurn() {
@@ -106,6 +141,9 @@ class Game {
         if (card.flipped || card.matched) return;
 
         card.flip();
+
+        this.flipSound.currentTime = 0;
+        this.flipSound.play();
 
         this.updateCard(card);
 
@@ -178,5 +216,18 @@ class Game {
                     : "text-black"
             }">${card.getSymbol()}</div>`;
         }, 500);
+    }
+
+    stopAllSounds() {
+        const sounds = [
+            this.flipSound,
+            this.winSong,
+            ...this.comboSounds
+        ];
+
+        sounds.forEach(sound => {
+            sound.pause();
+            sound.currentTime = 0;
+        });
     }
 }
