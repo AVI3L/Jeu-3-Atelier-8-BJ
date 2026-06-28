@@ -1,4 +1,4 @@
-const difficulties = { // ill see for a custome one
+const difficulties = {
     easy: 8,
     medium: 16,
     hard: 24
@@ -38,7 +38,9 @@ class Game {
 
         this.cards.forEach((card, index) => newCards.push(new Card(card.getValue(), card.getSuit()).setId(index)));
 
-        console.log(newCards);
+        // console.log(newCards);
+
+        this.winSong = document.querySelector(".WinSong");
 
         this.deck = new Deck().parse(newCards);
 
@@ -88,6 +90,8 @@ class Game {
         this.won = this.cards.every(card => card.matched);
 
         if (this.won) {
+            this.winSong.currentTime = 0;
+            this.winSong.play();
             setTimeout(() => {
                 alert("Bravo !");
             }, 1000);
