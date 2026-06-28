@@ -40,6 +40,21 @@ class Game {
 
         // console.log(newCards);
 
+        this.moves = 0;
+        this.matches = 0;
+        this.combo = 0;
+        this.totalPairs = cardCount / 2;
+        this.time = 0;
+        this.timer = null;
+
+        document.getElementById("score").textContent = "0";
+        document.getElementById("timer").textContent = "0";
+        document.getElementById("combo").textContent = "x0";
+        document.getElementById("pairs").textContent = 0;
+        document.getElementById("totalPairs").textContent = this.totalPairs;
+
+        this.startTimer();
+
         this.combo = 0;
 
         this.winSong = new Audio("../src/audio/You Win !.mp3");
@@ -73,15 +88,34 @@ class Game {
         this.renderBoard();
     }
 
+    startTimer() {
+        this.stopTimer();
+
+        this.timer = setInterval(() => {
+            this.time++;
+            document.getElementById("timer").textContent = this.time;
+        }, 1000);
+    }
+
+    stopTimer() {
+        if (this.timer) {
+            clearInterval(this.timer);
+            this.timer = null;
+        }
+    }
+
     checkMatch() {
         this.lockBoard = true;
 
         const isMatch = this.firstCard.getSymbol() === this.secondCard.getSymbol();
 
         if (isMatch) {
+            this.matches++;
             this.combo++;
             this.playCombo();
 
+            document.getElementById("pairs").textContent = this.matches;
+            document.getElementById("combo").textContent = `x${this.combo}`;
 
             this.firstCard.matched = true;
             this.secondCard.matched = true;
@@ -92,6 +126,8 @@ class Game {
 
         } else {
             this.combo = 0;
+            document.getElementById("combo").textContent = "x0";
+
             setTimeout(() => {
                 this.firstCard.flipped = false;
                 this.secondCard.flipped = false;
@@ -102,6 +138,10 @@ class Game {
 
             }, 1500);
         }
+
+        const combo = document.querySelector(".combo");
+
+        combo.classList.toggle("active", this.combo >= 3);
     }
 
     playCombo() {
@@ -125,8 +165,11 @@ class Game {
         this.won = this.cards.every(card => card.matched);
 
         if (this.won) {
+            this.stopTimer();
+
             this.winSong.currentTime = 0;
             this.winSong.play();
+
             setTimeout(() => {
                 alert("Bravo !");
             }, 1000);
@@ -144,6 +187,9 @@ class Game {
 
         this.flipSound.currentTime = 0;
         this.flipSound.play();
+
+        this.moves++;
+        document.getElementById("score").textContent = this.moves;
 
         this.updateCard(card);
 

@@ -141,6 +141,12 @@ body.memo-page {
     -o-transform: rotateY(180deg);
 }
 
+.combo.active {
+    color: gold;
+    font-weight: bold;
+    text-shadow: 0 0 10px orange;
+}
+
 h1,
 h2,
 h3,

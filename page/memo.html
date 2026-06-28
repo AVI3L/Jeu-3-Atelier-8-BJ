@@ -38,8 +38,17 @@
             <div class="score">
                 <p>Coups : <span id="score">0</span></p>
             </div>
+
             <div class="timer">
-                <p>Temps : <span id="timer">0</span> secondes</p>
+                <p>Temps : <span id="timer">0</span>s</p>
+            </div>
+
+            <div class="pairs">
+                <p>Paires : <span id="pairs">0</span>/<span id="totalPairs">8</span></p>
+            </div>
+
+            <div class="combo">
+                <p>Combo : <span id="combo">x0</span></p>
             </div>
         </div>
     </header>
@@ -57,6 +66,7 @@
         let game = new Game();
 
         restartBtn.addEventListener("click", () => {
+            game.stopTimer();
             game.stopAllSounds();
             game = new Game(difficultySelect.value);
         });
